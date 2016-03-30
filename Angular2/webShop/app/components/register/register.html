@@ -1,0 +1,35 @@
+<div class="main" style="padding: 5%; height: 800px; width: 100%; text-align: center;" *ngIf="isLoading==true">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+</div>
+<div *ngIf="isLoading==false" class="wrap"><br>
+    <!--<div style="width: 49%; float: left; padding:5%;">
+        <h4 class="title">Create an Account</h4><br><br>
+        <form (ngSubmit)="register(f)" #f="ngForm">
+            <input type="text" ngControl="name" class="form-control" placeholder="Name" #name="ngForm" required>
+            <br>
+            <input type="email" ngControl="email" class="form-control" placeholder="Email" #email="ngForm" required>
+            <br>
+            <input type="password" ngControl="password" class="form-control" placeholder="Password" #password="ngForm">
+            <br>
+            <hr>
+            <button type="submit" id="registerBttn" full class="btn-primary" >Register</button>
+        </form>
+        <br><br><br><br>
+    </div>-->
+
+    <div style="width: 60%; margin: 0 auto; padding:5%;">
+        <h4 class="title">LOGIN</h4><br><br>
+        <form (ngSubmit)="login(f1)" #f1="ngForm">
+            <input type="email" ngControl="email" class="form-control" placeholder="Email" #email="ngForm" required>
+            <br>
+            <input type="password" ngControl="password" class="form-control" placeholder="Password" #password="ngForm" required>
+            <br>
+            <hr>
+            <button type="submit" id="signInBttn" full class="btn-primary">Login</button>
+        </form>
+        <br><br><br><br>
+    </div>
+
+    <button (click)="getUsers()">Get Users</button><br>
+    <p>{{dataset}}</p>
+</div>

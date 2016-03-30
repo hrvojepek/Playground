@@ -1,0 +1,39 @@
+<div style="width: 70%; margin: 0 auto; border: solid; padding: 5%;">
+    <div class="check-out">
+        <h1>Checkout</h1>
+        <table >
+            <tr>
+                <th>Item</th>
+                <th>Qty</th>
+                <th>Prices</th>
+                <th>Delery Detials</th>
+                <th>Subtotal</th>
+            </tr>
+            <tr *ngFor="#b of basket">
+                <td class="ring-in"><img [src]="b.photo" class="img-responsive" style="width: 15%; margin-top: 20px;" alt="">
+                    <div class="sed">
+                        <h5>{{b.name}}</h5>
+                        <p>({{b.description}}) </p>
+
+                    </div>
+                    <div class="clearfix"> </div></td>
+                <td class="check"><input type="text" value="1" onfocus="this.value='';" onblur="if (this.value == '') {this.value ='';}"></td>
+                <td></td>
+                <td>FREE SHIPPING</td>
+                <td>${{b.price}}</td>
+            </tr>
+            <hr>
+            <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th>Total: £{{sum}}</th>
+            </tr>
+        </table>
+        <hr>
+        <div class="clearfix"> </div>
+    </div>
+
+    <button class="btn-danger" (click)="clearBasket()">Clear all</button>
+</div>

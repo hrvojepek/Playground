@@ -1,0 +1,34 @@
+
+<div class="main" style="padding: 5%; height: 800px; width: 100%; text-align: center;" *ngIf="isLoading==true">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+</div>
+<div class="main" style="padding: 5%;" *ngIf="isLoading==false">
+    <div style="float:right; width: 15%; margin-right: 5%; margin-top: 10px;" *ngIf="isAuthenticated==true">
+        <a style="color: black" class="color1" [routerLink]="['Basket']"><i class="fa fa-shopping-basket" ></i>({{basket.length}})</a>
+    </div>
+    <br><br><br>
+    <div class="content-bottom" style="clear: both">
+        <div class="box1" style="width: 80%; margin: 0 auto">
+            <div style="width: 30%; height: 450px; float:left; margin-bottom: 20px; margin-right: 10px" *ngFor="#s of sneakers">
+                <div class="view view-fifth" style="border: 1px solid slategrey;"><a [routerLink]="['Sneaker-Detail', {id: s.id}]">
+                    <div class="top_box">
+                        <h3 class="m_1">{{s.name}}</h3>
+                        <p class="m_2">{{s.description}}</p>
+                        <div class="grid_img">
+                            <div class=""><img [src]="s.photo" alt="" style="width: 80%; height: 40%"/></div>
+                            <div class="mask">
+                                <div class="info">Quick View</div>
+                            </div>
+                        </div>
+                        <div class="price">£{{s.price}}</div>
+                    </div>
+                </a></div>
+                <ul class="list" *ngIf="isAuthenticated==true" (click)="addToBasket(s)">
+                    <p style="background-color: black; color:white;">+ ADD</p>
+                </ul>
+                <div class="clear"></div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,21 @@
+<h1>SneakerDetail</h1>
+<div class="main" style="padding: 5%; height: 800px; width: 100%; text-align: center;" *ngIf="isLoading==true">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+</div>
+
+<div class="main">
+    <div style="width: 60%; margin: 0 auto; margin-bottom: 20px;" >
+        <div class="view view-fifth" style="border: 1px solid slategrey;">
+            <div class="top_box">
+                <h3 class="m_1">{{selectedSneaker.name}}</h3>
+                <p class="m_2">{{selectedSneaker.description}}</p>
+                <div class="grid_img">
+                    <div class=""><img [src]="selectedSneaker.photo" alt="" style="width: 80%; height: 40%"/></div>
+                </div>
+                <div class="price">£{{selectedSneaker.price}}</div>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+
+</div>
