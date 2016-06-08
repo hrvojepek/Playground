@@ -1,0 +1,20 @@
+<div style="width: 70%; margin: 0 auto;">
+  <ul class="nav nav-tabs nav-justified">
+    <li role="presentation" [class.active]="_donationsSelected" (click)="showDonations()"><a>Donations</a></li>
+    <li role="presentation" [class.active]="_eventsSelected" (click)="showEvents()"><a>Humanitarian Events</a></li>
+    <li role="presentation" [class.active]="_usersSelected" (click)="showUsers()"><a>Users</a></li>
+  </ul>
+</div>
+
+<div [hidden]="!_donationsSelected">
+  <donations></donations>
+</div>
+
+<div [hidden]="!_eventsSelected">
+  <humevents></humevents>
+</div>
+
+<div [hidden]="!_usersSelected">
+  <users></users>
+</div>
+

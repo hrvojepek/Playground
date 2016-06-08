@@ -1,0 +1,79 @@
+<section>
+  <div id="page-wrapper" class="sign-in-wrapper">
+    <div class="graphs">
+      <div class="sign-up">
+        <h1>Create an account</h1>
+        <h2>Personal Information</h2>
+        <form>
+        <div class="sign-u">
+          <div class="sign-up1">
+            <h4>Email Address*: </h4>
+          </div>
+          <div class="sign-up2">
+              <input type="email" class="okInput" [class.errInput]="emailExists" placeholder=" " required #email (blur)="checkIfEmailExists(email.value)"/>
+          </div>
+          <div class="errorMsg" [hidden]="!emailExists">
+            <p>Email already exists</p>
+          </div>
+          <div class="clearfix"> </div>
+        </div>
+          <div class="sign-u">
+            <div class="sign-up1">
+              <h4>First Name*: </h4>
+            </div>
+            <div class="sign-up2">
+              <input type="text" placeholder="" required #firstName (blur)="setName(firstName.value)"/>
+            </div>
+            <div class="clearfix"> </div>
+          </div>
+          <div class="sign-u">
+            <div class="sign-up1">
+              <h4>Last Name*: </h4>
+            </div>
+            <div class="sign-up2">
+              <input type="text" placeholder="" required #lastName (blur)="setLastName(lastName.value)"/>
+            </div>
+            <div class="clearfix"> </div>
+          </div>
+        <div class="sign-u">
+          <div class="sign-up1">
+            <h4>Password* :</h4>
+          </div>
+          <div class="sign-up2">
+              <input type="password" class="okInput" [class.errInput]="passLengthNotOk" placeholder=" " required=" " #password (keyup)="checkPasswords(password.value, passConf.value)"/>
+          </div>
+          <div class="errorMsg" [hidden]="!passLengthNotOk">
+            <p>Password must be at least 4 characters length</p>
+          </div>
+          <div class="clearfix"> </div>
+        </div>
+        <div class="sign-u">
+          <div class="sign-up1">
+            <h4>Confirm Password* :</h4>
+          </div>
+          <div class="sign-up2">
+              <input type="password" class="okInput" [class.errInput]="passwordsNotMatch" placeholder=" " required=" " #passConf (keyup)="checkPasswords(password.value, passConf.value)"/>
+          </div>
+          <div class="errorMsg" [hidden]="!passwordsNotMatch">
+            <p>Passwords don't match</p>
+          </div>
+          <div class="clearfix"> </div>
+        </div>
+        <div class="sub_home">
+          <div class="sub_home_left">
+              <button class="btn success btn-lg btn-block" [disabled]="!allowRegister" (click)="register()">Register</button>
+          </div>
+          <div class="sub_home_right">
+
+          </div>
+          <div class="clearfix"> </div>
+        </div>
+        </form>
+        <div class="new_people">
+          <h2>Already Have An Account?</h2>
+          <a [routerLink]="['Login']">Back To Login</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

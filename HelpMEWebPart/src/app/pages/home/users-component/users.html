@@ -1,0 +1,107 @@
+<div *ngIf="_isLoadingEvents">
+  <my-spinner></my-spinner>
+</div>
+
+<div class="total-ads main-grid-border" *ngIf="!_isLoadingEvents">
+  <div class="container">
+    <br><br><br>
+    <div class="all-categories">
+      <div class="search-hotel" style="width: 60%; margin: 0 auto;">
+        <h3 class="sear-head">Search for specific donation/event</h3>
+        <form>
+          <input type="submit" value=" " [disabled]>
+          <input type="text" placeholder="Type donation/event or owner name here..." #query (keyup)="search(query.value)">
+        </form>
+      </div>
+    </div>
+    <div class="ads-grid">
+
+      <div class="side-bar col-md-3">
+        <div class="search-hotel">
+          <h3 class="sear-head">Description contains</h3>
+          <form>
+            <input type="text" placeholder="Type Keywords Here...">
+            <input type="submit" (click)="filterByDescription()" value=" ">
+          </form>
+        </div>
+
+        <div class="search-hotel">
+          <h3 class="sear-head">Search By User Name/Surname</h3>
+          <form>
+            <input type="text" placeholder="Type keyword here...">
+            <input type="submit" (click)="filterByDescription()" value=" ">
+          </form>
+        </div>
+
+      </div>
+      <div class="ads-display col-md-9">
+        <div class="wrapper">
+          <div class="bs-example bs-example-tabs" role="tabpanel" data-example-id="togglable-tabs">
+            <ul id="myTab" class="nav nav-tabs nav-tabs-responsive" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#home" id="home-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="true">
+                  <span class="text">All</span>
+                </a>
+              </li>
+            </ul>
+            <div id="myTabContent" class="tab-content">
+              <div role="tabpanel" class="tab-pane fade in active" id="home" aria-labelledby="home-tab">
+                <div>
+                  <div id="container">
+                    <!--<div class="view-controls-list" id="viewcontrols">
+                      <label>view :</label>
+                      <a class="gridview"><i class="glyphicon glyphicon-th"></i></a>
+                      <a class="listview active"><i class="glyphicon glyphicon-th-list"></i></a>
+                    </div>-->
+                   <!-- <div class="sort">
+                      <div class="sort-by">
+                        <label>Sort By : </label>
+                        <select #sortQuery (change)="sortUsers(sortQuery.value)">
+                          <option value="">Most recent</option>
+                          <option value="asc">Surname: A->Z</option>
+                          <option value="desc">Surname: Z->A</option>
+                        </select>
+                      </div>
+                    </div>-->
+                    <div class="clearfix"></div>
+                    <ul class="grid" style="display: block;">
+                      <div *ngFor="let user of _users">
+                        <a [routerLink]="['UserDetails', {id: user.Id}]">
+                          <li>
+                            <img [src]="user.UserPhoto" title="" alt="">
+                            <section class="list-left">
+                              <h5 class="title">{{user.Description}}</h5>
+                              <span class="adprice">{{user.Name}} {{user.Surname}}</span>
+                              <p class="catpath"></p>
+                            </section>
+                            <section class="list-right">
+                              <span class="cityname"><i class="fa fa-map-marker"></i> {{user.Address}}, {{user.City}}</span>
+                            </section>
+                            <div class="clearfix"></div>
+                          </li>
+                        </a>
+                      </div>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <ul class="pagination pagination-sm">
+                <li><a href="#">Prev</a></li>
+                <li><a href="#">1</a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">5</a></li>
+                <li><a href="#">6</a></li>
+                <li><a href="#">7</a></li>
+                <li><a href="#">8</a></li>
+                <li><a href="#">Next</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</div>

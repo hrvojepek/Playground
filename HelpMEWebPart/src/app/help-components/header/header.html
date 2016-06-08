@@ -1,0 +1,45 @@
+<div class="header">
+  <div class="container">
+    <div class="logo">
+      <a [routerLink]="['Home']"><span>Help</span>ME</a>
+    </div>
+    <div class="header-right">
+      <div *ngIf="!_isUserLoggedIn">
+        <a class="account" [routerLink]="['Login']">Login</a>
+      </div>
+      <div *ngIf="_isUserLoggedIn" class="profileWidgetContainer">
+            <div class="profile">
+              <div class="profile-top">
+                <div class="pic-sec">
+                  <div class="pic">
+                    <img [src]="_userPhoto" style="margin-top: 0.5em;" alt=""/>
+                  </div>
+                  <div class="pic_info">
+                    <h2><a [routerLink]="['MyProfile']" style="color: white; text-decoration: none; font-weight: 700;">{{_userName}}</a></h2>
+                    <h5 style="color: white;">{{_userEmail}}</h5>
+                  </div>
+                  <div style="float: left; margin-top: 1em;">
+                    <i class="fa fa-2x" [class.fa-chevron-down]="!_profileMenuOpened" [class.fa-chevron-up]="_profileMenuOpened" style="color:white; cursor: pointer;" (click)="openCloseMenu()"></i>
+                  </div>
+                  <div class="clear"></div>
+                </div>
+              </div>
+              <div class="profile-bottom" [hidden]="!_profileMenuOpened">
+                <ul>
+                  <li><a [routerLink]="['MyProfile']" (click)="openCloseMenu()">My Profile</a></li>
+                  <li><a (click)="logoutUser()">Logout</a></li>
+                </ul>
+              </div>
+            </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+<div class="banner text-center">
+  <div class="container">
+    <h1>Together <span class="segment-heading"> We Are </span> Strong</h1>
+    <p>Login, Donate and make a world better place</p>
+    <a [hidden]="!_isUserLoggedIn" [routerLink]="['AddDonation']">Post A Donation</a>
+  </div>
+</div>

@@ -1,0 +1,111 @@
+<div class="contact main-grid-border">
+  <div class="container">
+    <h2 class="head text-center">Contact Us</h2>
+    <section id="hire">
+      <form id="filldetails">
+        <div class="field name-box">
+          <input type="text" id="name" placeholder="Your Name" #name/>
+          <label for="name">Name</label>
+          <span class="ss-icon">check</span>
+        </div>
+
+        <div class="field email-box">
+          <input type="text" id="email" placeholder="Your Email" #email/>
+          <label for="email">Email</label>
+          <span class="ss-icon">check</span>
+        </div>
+
+        <div class="field phonenum-box">
+          <input type="text" id="email" placeholder="Phone Number" #phone/>
+          <label for="email">Phone</label>
+          <span class="ss-icon">check</span>
+        </div>
+
+        <div class="field msg-box">
+          <textarea id="msg" rows="4" placeholder="Your message goes here..." #message></textarea>
+          <label for="msg">Your Msg</label>
+          <span class="ss-icon">check</span>
+        </div>
+        <input class="button" type="submit" value="Send" (click)="send(name.value, email.value, phone.value, message.value)" />
+      </form>
+
+        <!-- JavaScript Includes -->
+        <script src="js/jquery.knob.js"></script>
+
+        <!-- jQuery File Upload Dependencies -->
+        <script src="js/jquery.ui.widget.js"></script>
+        <script src="js/jquery.fileupload.js"></script>
+
+        <!-- Our main JS file -->
+        <script src="js/script.js"></script>
+    </section>
+    <script>
+      $('textarea').blur(function () {
+        $('#hire textarea').each(function () {
+          $this = $(this);
+          if (this.value != '') {
+            $this.addClass('focused');
+            $('textarea + label + span').css({ 'opacity': 1 });
+          } else {
+            $this.removeClass('focused');
+            $('textarea + label + span').css({ 'opacity': 0 });
+          }
+        });
+      });
+      $('#hire .field:first-child input').blur(function () {
+        $('#hire .field:first-child input').each(function () {
+          $this = $(this);
+          if (this.value != '') {
+            $this.addClass('focused');
+            $('.field:first-child input + label + span').css({ 'opacity': 1 });
+          } else {
+            $this.removeClass('focused');
+            $('.field:first-child input + label + span').css({ 'opacity': 0 });
+          }
+        });
+      });
+      $('#hire .field:nth-child(2) input').blur(function () {
+        $('#hire .field:nth-child(2) input').each(function () {
+          $this = $(this);
+          if (this.value != '') {
+            $this.addClass('focused');
+            $('.field:nth-child(2) input + label + span').css({ 'opacity': 1 });
+          } else {
+            $this.removeClass('focused');
+            $('.field:nth-child(2) input + label + span').css({ 'opacity': 0 });
+          }
+        });
+      });
+      $('#hire .field:nth-child(3) input').blur(function () {
+        $('#hire .field:nth-child(3) input').each(function () {
+          $this = $(this);
+          if (this.value != '') {
+            $this.addClass('focused');
+            $('.field:nth-child(3) input + label + span').css({ 'opacity': 1 });
+          } else {
+            $this.removeClass('focused');
+            $('.field:nth-child(3) input + label + span').css({ 'opacity': 0 });
+          }
+        });
+      });
+      $('#hire .field:nth-child(4) input').blur(function () {
+        $('#hire .field:nth-child(4) input').each(function () {
+          $this = $(this);
+          if (this.value != '') {
+            $this.addClass('focused');
+            $('.field:nth-child(4) input + label + span').css({ 'opacity': 1 });
+          } else {
+            $this.removeClass('focused');
+            $('.field:nth-child(4) input + label + span').css({ 'opacity': 0 });
+          }
+        });
+      });
+      //@ sourceURL=pen.js
+    </script>
+    <script>
+      if (document.location.search.match(/type=embed/gi)) {
+        window.parent.postMessage("resize", "*");
+      }
+    </script>
+  </div>
+</div>
