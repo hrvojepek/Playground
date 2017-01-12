@@ -6,8 +6,8 @@
     <version>0.0.1-SNAPSHOT</version>
   </parent>
   <artifactId>toy-model</artifactId>
-  <packaging>war</packaging>
-  <name>toy-model</name>
+  <packaging>jar</packaging>
+  <name>Toy model</name>
   
   	<properties>
 		<failOnMissingWebXml>false</failOnMissingWebXml>

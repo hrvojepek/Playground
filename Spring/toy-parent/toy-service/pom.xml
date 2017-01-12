@@ -1,18 +1,33 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>hr.hpek.spring-playing</groupId>
-    <artifactId>toy-parent</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-  </parent>
-  <artifactId>toy-service</artifactId>
-  <packaging>war</packaging>
-  <name>toy-service</name>
-  <description>Service module of the project</description>
-  
-  
-  	<properties>
-		<failOnMissingWebXml>false</failOnMissingWebXml>
-	</properties>
-  
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>hr.hpek.spring-playing</groupId>
+		<artifactId>toy-parent</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<artifactId>toy-service</artifactId>
+	<packaging>jar</packaging>
+	<name>toy-service</name>
+	<description>Service module of the project</description>
+
+
+<!-- 	<properties> -->
+<!-- 		<failOnMissingWebXml>false</failOnMissingWebXml> -->
+<!-- 	</properties> -->
+
+	<dependencies>
+		<dependency>
+			<groupId>hr.hpek.spring-playing</groupId>
+			<artifactId>toy-dao</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+		</dependency>
+
+	</dependencies>
+
 </project>

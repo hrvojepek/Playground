@@ -7,7 +7,7 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>toy-dao</artifactId>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<name>toy-dao</name>
 	<description>Data Access Object module</description>
 
@@ -20,6 +20,13 @@
 			<groupId>postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 		</dependency>
+
+		<dependency>
+			<groupId>hr.hpek.spring-playing</groupId>
+			<artifactId>toy-model</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
 	</dependencies>
 
 </project>
