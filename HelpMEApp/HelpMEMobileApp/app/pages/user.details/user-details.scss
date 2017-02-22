@@ -1,0 +1,87 @@
+
+.profilePhotoContainer{
+	margin: 0 auto;
+	width: 55%;
+	height: 15em;
+}
+
+profile-main {
+    background: #fff;
+    width: 35%;
+    margin:2em auto;
+    padding: 0em 0em;
+    border-radius: 4px;
+}
+.profile-pic {
+    padding: 1.5em 2em;
+    text-align: center;
+}
+.profile-pic img {
+    border:4px solid #fff;
+    border-radius: 120px;
+	    transition: 0.5s all;
+    -webkit-transition: 0.5s all;
+    -moz-transition: 0.5s all;
+    -o-transition: 0.5s all;
+}
+.profile-pic img:hover {
+	 border:4px solid #337ab7;
+	 transition: 0.5s all;
+  -webkit-transition: 0.5s all;
+  -moz-transition: 0.5s all;
+  -o-transition: 0.5s all;
+}
+.profile-pic h2 {
+    font-size: 2em;
+    color:#337ab7;
+    margin-bottom:0.1em;
+}
+.profile-pic p {
+    font-size: 1em;
+    color:#4E4E4E;
+}
+.profile-ser {
+    background: #ECECEC;
+    padding: 1em 1em;
+}
+.profile-ser-grids {
+    float: left;
+    width: 50%;
+    text-align: center;
+    border-right: 1px solid #000;
+}
+.profile-ser-grids.no-border {
+    border: none;
+}
+.profile-ser-grids h4 {
+    font-size: 1em;
+    color: #000;
+    margin-top: 0.2em;
+}
+.profile-follows ul li{
+   display:inline-block;	
+   margin-right: 1.5em;
+}
+.profile-follows {
+    text-align: center;
+    padding:2.5em 0em;
+}
+
+.follow-btn a {
+    font-size: 1em;
+    color: #fff;
+    background:#337ab7;
+    padding: 0.5em 2.5em;
+    display: inline-block;
+    margin-top: 2em;
+    border-radius: 3px 3px;
+}
+.follow-btn a:hover {
+	background:#3B3A3A;
+}
+h1 {
+    font-size: 3em;
+    color: #fff;
+    text-align: center;
+    margin-top: 0.7em;
+}

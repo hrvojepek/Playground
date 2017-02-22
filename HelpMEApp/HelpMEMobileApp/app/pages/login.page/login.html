@@ -1,0 +1,40 @@
+<ion-navbar *navbar>
+    <ion-title>Sign In</ion-title>
+</ion-navbar>
+
+<div *ngIf="_isLoading">
+    <my-spinner></my-spinner>
+</div>
+
+
+<ion-content>
+    <div class="mycontainerReg">
+        <br>
+        <h3>Welcome Back</h3>
+        <h5>Please Login To Continue</h5>
+        <br><br>
+        <div class="login">
+            <form>
+                <ul>
+                    <li>
+                        <a  class="icon mail"></a><input type="email" [class.loginMailErr]="_emailNotOK" placeholder="Your Email" #email required>
+                        <div class="errorMsgLogin" [hidden]="!_emailNotOK">
+                            <p>Email does not exist</p>
+                          </div>
+                    </li>
+                    <li>
+                        <a class="icon key"></a><input type="password" [class.loginPassErr]="_passNotOK" placeholder="Password" #password required>
+                         <div class="errorMsgLogin" [hidden]="!_passNotOK">
+                            <p>Password is not valid</p>
+                         </div>
+                    </li>
+                    <div class="clear"></div>
+                    <br><br>
+                </ul>
+                <div style="padding-left: 6%; width: 100%">
+                    <button full (click)="loginUser(email.value, password.value)">Login</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</ion-content>

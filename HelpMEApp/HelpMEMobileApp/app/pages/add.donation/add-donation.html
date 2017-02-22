@@ -1,0 +1,156 @@
+<ion-navbar *navbar>
+    <button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+    </button>
+
+    <ion-title>
+        Add Donation
+    </ion-title>
+
+    <ion-buttons end>
+    </ion-buttons>
+</ion-navbar>
+
+<div *ngIf="_isLoading">
+    <my-spinner></my-spinner>
+</div>
+
+<ion-content *ngIf="!_isLoading" padding>
+   <div class="post-ad-form" [hidden]="donationPostedInDB">
+      <h2 class="head">Add Your Donation</h2>
+      <form>
+        <label>Select Category <span>*</span></label>
+        <select class="form-control" #cat (change)="checkCategory(cat.value)">
+          <option value="Books">Books</option>
+          <option value="Chlotes">Chlotes</option>
+          <option value="Food">Food</option>
+          <option value="Footwear">Footwear</option>
+          <option value="Technology">Technology</option>
+          <option value="Other">Other</option>
+        </select>
+        <div class="clearfix"></div>
+
+        <div [hidden]="!subCategoryVisible">
+          <label>Select SubCategory <span>*</span></label>
+          <select class="form-control" #subCat>
+            <option value="None">Select SubCategory</option>
+            <option value="Children">Children</option>
+            <option value="Men">Men</option>
+            <option value="Women">Women</option>
+          </select>
+          <div class="clearfix"></div>
+        </div>
+
+        <label>Select Condition <span>*</span></label>
+        <select class="form-control" #condition>
+          <option value="New">New</option>
+          <option value="Good">Good</option>
+          <option value="Bad">Bad</option>
+        </select>
+        <div class="clearfix"></div>
+
+        <label>Donation Title <span>*</span></label>
+        <input type="text" class="form-control" placeholder="Your Donation Title" #caption>
+        <div class="clearfix"></div>
+
+        <label>Donation Description <span>*</span></label>
+        <textarea class="form-control" placeholder="Write few lines about your donation" #description></textarea>
+        <div class="clearfix"></div>
+
+        <label>Donation City <span>*</span></label>
+        <input type="text" class="form-control" placeholder="Where is Your Donation" #city>
+        <div class="clearfix"></div>
+
+        <button class="btn btn-default" (click)="addDonation(cat.value, subCat.value, condition.value, caption.value, description.value, city.value)">Add Donation</button>
+      </form>
+      </div>
+
+<!--
+    <div *ngIf="donationPostedInDB">
+      <div class="upload-ad-photos">
+        <h2 class="head">Photos for your donation :</h2>
+        <br>
+        <div class="photos-upload-view">
+          <div class="container" style="width: 100%;">
+            <div>
+              <h3>Select files</h3><br>
+              <input type="file" ng2FileSelect [uploader]="uploader" class="btn btn-default" /><br/>
+            </div>
+
+            <div style="margin-bottom: 40px">
+
+              <h3>Upload queue</h3>
+
+              <table class="table" style="width: 100%;">
+                <thead>
+                <tr>
+                  <th width="50%">Name</th>
+                  <th>Size</th>
+                  <th>Progress</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let item of uploader.queue">
+                  <td><strong></strong></td>
+                  <td *ngIf="uploader.isHTML5" nowrap>0.00 MB</td>
+                  <td *ngIf="uploader.isHTML5">
+                    <div class="progress" style="margin-bottom: 0;">
+                      <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': item.progress + '%' }"></div>
+                    </div>
+                  </td>
+                  <td class="text-center">
+                    <span *ngIf="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+                    <span *ngIf="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                    <span *ngIf="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+                  </td>
+                  <td nowrap>
+                    <button type="button" class="btn btn-success btn-xs"
+                            (click)="item.upload()" [disabled]="item.isReady || item.isUploading || item.isSuccess">
+                      <span class="glyphicon glyphicon-upload"></span> Upload
+                    </button>
+                    <button type="button" class="btn btn-warning btn-xs"
+                            (click)="item.cancel()" [disabled]="!item.isUploading">
+                      <span class="glyphicon glyphicon-ban-circle"></span> Cancel
+                    </button>
+                    <button type="button" class="btn btn-danger btn-xs"
+                            (click)="item.remove()">
+                      <span class="glyphicon glyphicon-trash"></span> Remove
+                    </button>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+
+              <div>
+                <div>
+                  Queue progress:
+                  <div class="progress" style="">
+                    <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
+                  </div>
+                </div>
+                <button type="button" class="btn btn-success btn-s"
+                        (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
+                  <span class="glyphicon glyphicon-upload"></span> Upload all
+                </button>
+                <button type="button" class="btn btn-warning btn-s"
+                        (click)="uploader.cancelAll()" [disabled]="!uploader.isUploading">
+                  <span class="glyphicon glyphicon-ban-circle"></span> Cancel all
+                </button>
+                <button type="button" class="btn btn-danger btn-s"
+                        (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
+                  <span class="glyphicon glyphicon-trash"></span> Remove all
+                </button>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+        <div class="clearfix"></div>
+        <button class="btn btn-success" (click)="finishAdding()">Finish</button>
+      </div>
+    </div>-->
+
+</ion-content>

@@ -1,0 +1,50 @@
+<ion-navbar *navbar>
+  <ion-title>Sign Up</ion-title>
+</ion-navbar>
+<div *ngIf="_isLoading">
+  <my-spinner></my-spinner>
+</div>
+
+<ion-content>
+  <div class="mycontainerReg">
+    <br>
+    <h3>Welcome</h3>
+    <h5>Register And Join Our Community</h5>
+    <br><br>
+    <div class="login">
+      <form>
+        <ul>
+          <li>
+            <a class="icon user"></a><input type="text" class="text"  placeholder="Your First Name" required #firstName (blur)="setName(firstName.value)">
+          </li>
+          <li>
+            <a class="icon user"></a><input type="text" class="text"  placeholder="Your Last Name" required required #lastName (blur)="setLastName(lastName.value)">
+          </li>
+          <li>
+            <a  class=" icon mail"></a><input type="email" class="text" placeholder="Your Email" #email required (blur)="checkIfEmailExists(email.value)">
+            <div class="errorMsg" [hidden]="!emailExists">
+             <p>Email already exists</p>
+            </div>
+          </li>
+          <li>
+            <a class=" icon key"></a><input type="password" placeholder="Password" #password (keyup)="checkPasswords(password.value, passConf.value)">
+            <div class="errorMsg" [hidden]="!passLengthNotOk">
+              <p>Password must be at least 4 characters long</p>
+            </div>
+          </li>
+          <li >
+            <a class=" icon key"></a><input type="password" placeholder="Confirm Password" required #passConf (keyup)="checkPasswords(password.value, passConf.value)">
+            <div class="errorMsg" [hidden]="!passwordsNotMatch">
+              <p>Passwords don't match</p>
+            </div>
+          </li>
+          <div class="clear"></div>
+          <br><br>
+        </ul>
+        <div style="padding-left: 6%; width: 100%">
+          <button full [disabled]="!allowRegister" (click)="register()">Register</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</ion-content>

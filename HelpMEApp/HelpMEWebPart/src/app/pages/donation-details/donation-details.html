@@ -1,0 +1,92 @@
+<div *ngIf="_isLoading">
+  <my-spinner></my-spinner>
+</div>
+<div *ngIf="_deletingDonation" class="spinnerDivRel">
+    <div style="background-color: ghostwhite; width: 30%; height: 25%; margin: 0 auto; margin-top: 20em; text-align: center; padding: 2% 5% 5% 5%; border-radius: 5%;">
+      <h3>Are You sure You want to delete Your Donation?</h3><br><br>
+      <button class="btn btn-success" (click)="onDeleteClicked('Yes')"><i class="fa fa-check" aria-hidden="true"></i> Yes</button><br><br>
+      <button class="btn btn-danger" (click)="onDeleteClicked('No')"><i class="fa fa-times" aria-hidden="true"></i> No</button>
+    </div>
+</div>
+
+<!--single-page-->
+<div class="single-page main-grid-border" *ngIf="!_isLoading">
+  <div [hidden]="!_showingPeopleWhoWantDonation" class="spinnerDivRel">
+    <div style="background-color: ghostwhite; width: 40%; height: 65%; margin: 0 auto; margin-top: 10em; text-align: center; padding: 2% 5% 5% 5%; border-radius: 5%; overflow: auto;">
+      <div style="float: right;">
+        <i class="fa fa-times fa-2x" style="cursor: pointer;" (click)="_showingPeopleWhoWantDonation = false"></i>
+      </div>
+      <div class="clearfix"></div>
+      <h2>Users Who Want "{{_donation.Caption}}"</h2><br><br><br>
+      <div *ngFor="let user of _usersWhoWantDonation" style="width: 85%; margin: 0 auto;" class="attenders">
+        <a [routerLink]="['UserDetails', {id: user.UserId}]">
+          <div style="float: left; margin-right: 5%; width: 30%;">
+            <img [src]="user.UserPhoto" style="border-radius: 120%; width: 70%;">
+          </div>
+          <div style="float: left; width: 60%; margin-top: 5%;">
+            <h4>{{user.Name}} {{user.Surname}}</h4>
+          </div>
+          <div class="clearfix"></div>
+        </a>
+        <hr>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="product-desc">
+      <div class="col-md-7 product-view">
+        <h2>{{_donation.Caption}}</h2>
+        <p> <i class="glyphicon glyphicon-map-marker"></i>{{_donation.Owner.Address}}<a></a>, <a>{{_donation.City}}</a>|
+          Added at {{_donation.TimeCreated | date:'yyyy-MM-dd HH:mm'}}, Donation ID: {{_donation.Id}}</p>
+        <div class="flexslider">
+          <!--<div *ngFor="let photo of _donation.Photos">
+            <img [src]="photo.PhotoPath" width="70%"/>
+          </div>-->
+          <img [src]="_donation.Photos[0].PhotoPath" width="70%"/>
+        </div>
+        <div class="product-details">
+          <p><strong>Description</strong> {{_donation.Description}}</p>
+          <br><br>
+          <h4 style="cursor: pointer;"><i class="fa fa-heart" [class.attending]="_userWantsDonation" (click)="wantOrNot()"></i>
+            <span (click)="_showingPeopleWhoWantDonation=true">Wanted by: {{_usersWhoWantDonation.length}} user(s)</span></h4>
+
+        </div>
+      </div>
+      <div class="col-md-5 product-details-grid">
+        <div class="item-price">
+          <div class="product-price">
+            <p class="p-price">Category</p>
+            <h3 class="rate">{{_donation.Category}}</h3>
+            <div class="clearfix"></div>
+          </div>
+          <div class="condition">
+            <p class="p-price">Sub-Category</p>
+            <h4>{{_donation.SubCategory}}</h4>
+            <div class="clearfix"></div>
+          </div>
+          <div class="itemtype">
+            <p class="p-price">Condition</p>
+            <h4>{{_donation.Condition}}</h4>
+            <div class="clearfix"></div>
+          </div>
+        </div>
+        <div class="interested text-center" *ngIf="_donation.Owner.Id != _userId">
+          <h4>Interested in this Donation?<small> Contact the Seller!</small></h4>
+          <p><i class="fa fa-user"></i>{{_donation.Owner.Name}} {{_donation.Owner.Surname}}</p>
+          <p><i class="fa fa-envelope-o"></i>{{_donation.Owner.Email}}</p>
+          <p><i class="glyphicon glyphicon-earphone"></i>{{_donation.Owner.Phone}}</p>
+          <a class="account" [routerLink]="['UserDetails', {id: _donation.Owner.Id}]">See Owner Profile</a>
+          <br><br>
+        </div>
+        <div class="interested text-center" *ngIf="_donation.Owner.Id == _userId">
+          <h4>Options:<small></small></h4>
+          <p><button class="btn btn-danger" (click)="deleteDonationPopup()"><i class="fa fa-trash" aria-hidden="true"></i> Delete Donation</button></p>
+          <br><br>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</div>
+<!--//single-page-->

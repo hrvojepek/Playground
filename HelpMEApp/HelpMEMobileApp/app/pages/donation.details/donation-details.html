@@ -1,0 +1,64 @@
+<ion-navbar *navbar>
+    <button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+    </button>
+
+    <ion-title>
+        {{donation.Caption}}
+    </ion-title>
+
+    <ion-buttons end>
+        <button>
+            <ion-icon name="options"></ion-icon>
+        </button>
+    </ion-buttons>
+</ion-navbar>
+
+<div *ngIf="_isLoading">
+    <my-spinner></my-spinner>
+</div>
+
+
+<ion-content *ngIf="!_isLoading">
+    <div padding>
+        <ion-item>
+            <br>
+            <ion-avatar item-left>
+                <img [src]="donation.Owner.UserPhoto">
+            </ion-avatar>
+            <h2>{{donation.Owner.Name}} {{donation.Owner.Surname}}</h2>
+            <p>Added: {{donation.TimeCreated | date:'yyyy-MM-dd HH:mm'}}</p>
+        </ion-item>
+
+        <ion-slides>
+          <ion-slide *ngFor="#p of donation.Photos">
+            <img [src]="p.PhotoPath">
+          </ion-slide>
+        </ion-slides>
+        
+
+        <ion-card-content>
+            <br>
+            <h5>{{donation.Description}}</h5>
+            <br>
+            <p><b>Category:</b> {{donation.Category}} >> {{donation.SubCategory}}</p>
+            <br>
+            <p><i class="fa fa-map-marker" aria-hidden="true"></i> {{donation.City}}</p>
+        </ion-card-content>
+
+        <ion-row>
+            <ion-col width-50>
+                <i class="fa fa-heart fa-2x" [class.attending]="_userWantsDonation" style="cursor: pointer; float: left; margin-right: 5%;" (click)="wantOrNot()"></i>
+                <span style="cursor: pointer;" (click)="showUsersWhoWant()">Wanted by: {{donation.UsersWhoWantDonation.length}}</span>
+            </ion-col>
+            <ion-col width-50>
+                <i class="fa fa-comment fa-2x" style="cursor: pointer; float: left; margin-right: 5%;"></i>
+                <span style="cursor: pointer;" (click)="showComments()"> Comments: {{donation.Comments.length}}</span>
+            </ion-col>
+            <ion-col center text-center>
+                <ion-note>
+                </ion-note>
+            </ion-col>
+        </ion-row>
+    </div>
+</ion-content>

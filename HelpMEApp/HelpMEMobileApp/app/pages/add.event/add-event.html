@@ -1,0 +1,50 @@
+<ion-navbar *navbar>
+    <button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+    </button>
+
+    <ion-title>
+        Add Event
+    </ion-title>
+
+    <ion-buttons end>
+    </ion-buttons>
+</ion-navbar>
+
+<div *ngIf="_isLoading">
+    <my-spinner></my-spinner>
+</div>
+
+<ion-content *ngIf="!_isLoading">
+   <div class="post-ad-form" [hidden]="donationPostedInDB">
+      <h2 class="head">Create Your Donation</h2>
+      <form [hidden]="eventPostedInDB">
+        <label>Event Title <span>*</span></label>
+        <input type="text" class="phone" placeholder="Your Event Title" #caption>
+        <div class="clearfix"></div>
+
+        <label>Event Description <span>*</span></label>
+        <textarea class="mess" placeholder="Write few lines about your event" #description></textarea>
+        <div class="clearfix"></div>
+
+        <label>Event Address <span>*</span></label>
+        <input type="text" class="phone" placeholder="Address of Your Event" #address>
+        <div class="clearfix"></div>
+
+        <label>Event City <span>*</span></label>
+        <input type="text" class="phone" placeholder="City of Your Event" #city>
+        <div class="clearfix"></div>
+
+        <label>Starting Time Of Event <span>*</span></label>
+        <input type="datetime-local" #start (change)="showDate(start.value)">
+        <div class="clearfix"></div>
+        <br>
+        <label>Ending Time Of Event <span>*</span></label>
+        <input type="datetime-local" #end (change)="showDate(end.value)">
+        <div class="clearfix"></div>
+        <br>
+        <button class="btn btn-default" (click)="addEvent(caption.value, description.value, address.value, city.value, start.value, end.value)">Send</button>
+      </form>
+      </div>
+
+</ion-content>

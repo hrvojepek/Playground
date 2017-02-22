@@ -1,0 +1,123 @@
+
+<div class="submit-ad main-grid-border">
+  <div class="container">
+    <div class="post-ad-form" [hidden]="donationPostedInDB">
+      <h2 class="head">Create Your Donation</h2>
+      <form [hidden]="eventPostedInDB">
+        <label>Event Title <span>*</span></label>
+        <input type="text" class="phone" placeholder="Your Event Title" #caption>
+        <div class="clearfix"></div>
+
+        <label>Event Description <span>*</span></label>
+        <textarea class="mess" placeholder="Write few lines about your event" #description></textarea>
+        <div class="clearfix"></div>
+
+        <label>Event Address <span>*</span></label>
+        <input type="text" class="phone" placeholder="Address of Your Event" #address>
+        <div class="clearfix"></div>
+
+        <label>Event City <span>*</span></label>
+        <input type="text" class="phone" placeholder="City of Your Event" #city>
+        <div class="clearfix"></div>
+
+        <label>Starting Time Of Event <span>*</span></label>
+        <input type="datetime-local" #start (change)="showDate(start.value)">
+        <div class="clearfix"></div>
+        <br>
+        <label>Ending Time Of Event <span>*</span></label>
+        <input type="datetime-local" #end (change)="showDate(end.value)">
+        <div class="clearfix"></div>
+        <br>
+        <button class="btn btn-default" (click)="addEvent(caption.value, description.value, address.value, city.value, start.value, end.value)">Add Event</button>
+      </form>
+      </div>
+
+    <div *ngIf="eventPostedInDB">
+      <div class="upload-ad-photos">
+        <h2 class="head">Upload Photo for your event:</h2>
+        <br>
+        <div class="photos-upload-view">
+          <div class="container" style="width: 100%;">
+            <div>
+              <h3>Select files</h3><br>
+              <input type="file" ng2FileSelect [uploader]="uploader" class="btn btn-default" /><br/>
+            </div>
+
+            <div style="margin-bottom: 40px">
+
+              <h3>Upload queue</h3>
+
+              <table class="table" style="width: 100%;">
+                <thead>
+                <tr>
+                  <th width="50%">Name</th>
+                  <th>Size</th>
+                  <th>Progress</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let item of uploader.queue">
+                  <td><strong></strong></td>
+                  <td *ngIf="uploader.isHTML5" nowrap>0.00 MB</td>
+                  <td *ngIf="uploader.isHTML5">
+                    <div class="progress" style="margin-bottom: 0;">
+                      <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': item.progress + '%' }"></div>
+                    </div>
+                  </td>
+                  <td class="text-center">
+                    <span *ngIf="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+                    <span *ngIf="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                    <span *ngIf="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+                  </td>
+                  <td nowrap>
+                    <button type="button" class="btn btn-success btn-xs"
+                            (click)="item.upload()" [disabled]="item.isReady || item.isUploading || item.isSuccess">
+                      <span class="glyphicon glyphicon-upload"></span> Upload
+                    </button>
+                    <button type="button" class="btn btn-warning btn-xs"
+                            (click)="item.cancel()" [disabled]="!item.isUploading">
+                      <span class="glyphicon glyphicon-ban-circle"></span> Cancel
+                    </button>
+                    <button type="button" class="btn btn-danger btn-xs"
+                            (click)="item.remove()">
+                      <span class="glyphicon glyphicon-trash"></span> Remove
+                    </button>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+
+              <div>
+                <div>
+                  Queue progress:
+                  <div class="progress" style="">
+                    <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
+                  </div>
+                </div>
+                <button type="button" class="btn btn-success btn-s"
+                        (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
+                  <span class="glyphicon glyphicon-upload"></span> Upload all
+                </button>
+                <button type="button" class="btn btn-warning btn-s"
+                        (click)="uploader.cancelAll()" [disabled]="!uploader.isUploading">
+                  <span class="glyphicon glyphicon-ban-circle"></span> Cancel all
+                </button>
+                <button type="button" class="btn btn-danger btn-s"
+                        (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
+                  <span class="glyphicon glyphicon-trash"></span> Remove all
+                </button>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+        <div class="clearfix"></div>
+        <button class="btn btn-success" (click)="finishAdding()">Finish</button>
+      </div>
+    </div>
+
+    </div>
+  </div>

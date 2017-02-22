@@ -1,0 +1,92 @@
+<div *ngIf="_isLoadingEvents">
+  <my-spinner></my-spinner>
+</div>
+
+<div class="total-ads main-grid-border" *ngIf="!_isLoadingEvents">
+  <div class="container">
+    <div class="all-categories">
+      <div class="search-hotel" style="width: 60%; margin: 0 auto;">
+        <h3 class="sear-head">Search for specific event</h3>
+        <form>
+          <input type="submit" value=" " [disabled]>
+          <input type="text" placeholder="Type event name here..." #query (keyup)="search(query.value)">
+        </form>
+      </div>
+    </div>
+    <div class="ads-grid">
+
+      <div class="side-bar col-md-3">
+        <div class="search-hotel">
+          <h3 class="sear-head">Description contains</h3>
+          <form>
+            <input type="text" placeholder="Type Keywords Here...">
+            <input type="submit" (click)="filterByDescription()" value=" ">
+          </form>
+        </div>
+
+        <div class="search-hotel">
+          <h3 class="sear-head">Search By User Name/Surname</h3>
+          <form>
+            <input type="text" placeholder="Type keyword here...">
+            <input type="submit" (click)="filterByDescription()" value=" ">
+          </form>
+        </div>
+
+      </div>
+      <div class="ads-display col-md-9">
+        <div class="wrapper">
+          <div class="bs-example bs-example-tabs" role="tabpanel" data-example-id="togglable-tabs">
+            <ul id="myTab" class="nav nav-tabs nav-tabs-responsive" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#home" id="home-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="true">
+                  <span class="text">All</span>
+                </a>
+              </li>
+            </ul>
+            <div id="myTabContent" class="tab-content">
+              <div role="tabpanel" class="tab-pane fade in active" id="home" aria-labelledby="home-tab">
+                <div>
+                  <div id="container">
+                    <div class="clearfix"></div>
+                    <ul class="list">
+                      <div *ngFor="let humEvent of _humEvents">
+                        <a [routerLink]="['EventDetails', {id: humEvent.Id}]">
+                          <li>
+                            <img [src]="humEvent.Photo" title="" alt="" />
+                            <section class="list-left">
+                              <h5 class="title">{{humEvent.Caption}}</h5>
+                              <span class="adprice">{{humEvent.UserOwner.Name}} {{humEvent.UserOwner.Surname}}</span>
+                              <p class="catpath"></p>
+                            </section>
+                            <section class="list-right">
+                              <span class="date">Starting at: {{humEvent.StartingTime | date:'yyyy-MM-dd HH:mm'}}</span>
+                              <span class="cityname">{{humEvent.Address}} {{humEvent.City}}</span>
+                            </section>
+                            <div class="clearfix"></div>
+                          </li>
+                        </a>
+                      </div>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <!--<ul class="pagination pagination-sm">
+                <li><a href="#">Prev</a></li>
+                <li><a href="#">1</a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">5</a></li>
+                <li><a href="#">6</a></li>
+                <li><a href="#">7</a></li>
+                <li><a href="#">8</a></li>
+                <li><a href="#">Next</a></li>
+              </ul>-->
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</div>

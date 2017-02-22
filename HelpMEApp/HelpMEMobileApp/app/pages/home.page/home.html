@@ -1,0 +1,60 @@
+<ion-navbar *navbar>
+    <button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+    </button>
+
+    <ion-title>
+        HelpME
+    </ion-title>
+
+    <ion-buttons end>
+        <button (click)="showAddMenu()">
+            <ion-icon name="add"></ion-icon>
+        </button>
+    </ion-buttons>
+</ion-navbar>
+
+<div *ngIf="_isLoading">
+    <my-spinner></my-spinner>
+</div>
+
+<ion-content *ngIf="!_isLoading">
+    <div class="tabs">
+        <ul class="nav nav-pills nav-justified">
+            <li role="presentation" [class.active]="showing[0]" style="width: 32%; float: left;" (click)="changeView(0)"><a><i class="fa fa-list-alt"></i> <span class="badge">{{donations.length}}</span></a></li>
+            <li role="presentation" [class.active]="showing[1]" style="width: 33%; float: left;" (click)="changeView(1)"><a><i class="fa fa-calendar" style="margin: 0 auto;"></i> <span class="badge" style="margin: 0 auto;">{{humEvents.length}}</span></a></li>
+            <li role="presentation" [class.active]="showing[2]" style="width: 33%; float: left;" (click)="changeView(2)"><a><i class="fa fa-user"></i> <span class="badge">{{users.length}}</span></a></li>
+        </ul>
+        <div class="clearfix"></div>
+    </div>
+    <br>
+    <ion-list [hidden]="!showing[0]">
+        <ion-item *ngFor="#d of donations; #i = index" (click)="showDonationDetails(i)">
+            <ion-thumbnail item-left>
+                <img [src]="d.Photos[0].PhotoPath">
+            </ion-thumbnail>
+            <h2>{{d.Caption}}</h2>
+            <p>{{d.Owner.Name}} {{d.Owner.Surname}} • {{d.Category}}</p>
+        </ion-item>
+    </ion-list>
+
+    <ion-list [hidden]="!showing[1]">
+        <ion-item *ngFor="#e of humEvents; #i = index" (click)="showEventDetails(i)">
+            <ion-thumbnail item-left>
+                <img [src]="e.Photo">
+            </ion-thumbnail>
+            <h2>{{e.Caption}}</h2>
+            <p>{{e.Address}} • {{e.City}} at {{e.StartingTime | date}}</p>
+        </ion-item>
+    </ion-list>
+
+    <ion-list [hidden]="!showing[2]">
+        <ion-item *ngFor="#u of users; #i = index" (click)="showUserDetails(i)">
+            <ion-thumbnail item-left>
+                <img [src]="u.UserPhoto">
+            </ion-thumbnail>
+            <h2>{{u.Name}} {{u.Surname}}</h2>
+            <p>{{u.Address}} • {{u.City}}</p>
+        </ion-item>
+    </ion-list>
+</ion-content>

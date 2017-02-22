@@ -1,0 +1,162 @@
+<div *ngIf="_isLoading">
+  <my-spinner></my-spinner>
+</div>
+
+<div style="width: 70%; margin: 0 auto;" *ngIf="!_isLoading">
+  <h3 class="head-top"></h3>
+  <div class="but_list">
+    <div class="bs-example bs-example-tabs" role="tabpanel" data-example-id="togglable-tabs">
+      <ul id="myTab" class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#profile" id="profile-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="true">About {{_user.Name}}</a></li>
+        <li role="presentation"><a href="#donations" role="tab" id="donations-tab" data-toggle="tab" aria-controls="profile">{{_user.Name}}'s Donations</a></li>
+        <li role="presentation"><a href="#events" role="tab" id="events-tab" data-toggle="tab" aria-controls="profile">{{_user.Name}}'s Events</a></li>
+      </ul>
+      <div id="myTabContent" class="tab-content">
+        <div role="tabpanel" class="tab-pane fade in active" id="profile" aria-labelledby="profile-tab">
+          <div style="float: right;">
+          </div>
+          <div class="clearfix"></div>
+          <div style="float: left; width: 30em; height: 25em; padding: 3%;">
+            <div>
+              <img [src]="_user.UserPhoto" width="55%;">
+              <div style="position: absolute; bottom: 0; width: 50%;">
+              </div>
+            </div>
+            <br><br><br>
+            <h4>{{_user.Description}}</h4>
+          </div>
+          <div style="float: left; width: 30em; height: 25em; padding: 3%;">
+            <h4>User Data:</h4>
+            <br>
+            <p><i class="fa fa-user"></i><b> First Name:</b> {{_user.Name}}</p><br>
+            <p><i class="fa fa-user"></i><b> Last Name:</b> {{_user.Surname}}</p><br>
+            <p><i class="fa fa-envelope"></i><b> Email:</b> {{_user.Email}}</p><br>
+            <p><i class="fa fa-phone-square"></i><b> Phone:</b> {{_user.Phone}}</p><br>
+            <p><i class="fa fa-map-marker"></i><b> Address:</b> {{_user.Address}}</p><br>
+            <p><i class="fa fa-hospital-o"></i><b> City:</b> {{_user.City}}</p><br>
+          </div>
+
+
+          <div class="clearfix"></div>
+        </div>
+        <!--DONATIONS---------------------------------------------------------->
+        <div role="tabpanel" class="tab-pane fade" id="donations" aria-labelledby="donations-tab">
+          <div class="ads-display">
+            <div class="wrapper">
+              <div class="bs-example bs-example-tabs" role="tabpanel" data-example-id="togglable-tabs">
+                <div id="myTabContent" class="tab-content">
+                  <div>
+                    <div id="container">
+                      <div class="view-controls-list" id="viewcontrols">
+                        <!-- <label>view :</label>
+                         <a class="gridview"><i class="glyphicon glyphicon-th"></i></a>
+                         <a class="listview active"><i class="glyphicon glyphicon-th-list"></i></a>-->
+                      </div>
+                      <div class="sort">
+                        <div class="sort-by">
+                          <!--<label>Sort By : </label>
+                          <select>
+                            <option value="">Most recent</option>
+                            <option value="">Price: Rs Low to High</option>
+                            <option value="">Price: Rs High to Low</option>
+                          </select>-->
+                        </div>
+                      </div>
+                      <div class="clearfix"></div>
+                      <div *ngIf="_userDonations.length<=0">
+                        <br><br>
+                        <h2>{{_user.Name}} hasn't added any donations yet</h2>
+                        <br><br>
+                      </div>
+                      <ul class="list" *ngIf="_userDonations.length>0">
+                        <div *ngFor="let donation of _userDonations">
+                          <a [routerLink]="['DonationDetails', {id: donation.Id}]">
+                            <li>
+                              <img [src]="donation.Photos[0].PhotoPath" title="" alt="" />
+                              <section class="list-left">
+                                <h5 class="title">{{donation.Caption}}</h5>
+                                <span class="adprice">{{donation.Description}}</span>
+                                <p class="catpath">{{donation.Category}} » {{donation.SubCategory}}</p>
+                              </section>
+                              <section class="list-right">
+                                <span class="date">Added Time</span>
+                                <span class="date">{{donation.TimeCreated | date:'yyyy-MM-dd HH:mm'}}</span>
+                                <span class="cityname">{{donation.City}}</span>
+                              </section>
+                              <div class="clearfix"></div>
+                            </li>
+                          </a>
+                        </div>
+                      </ul>
+                    </div>
+                  </div>
+                  <!--<ul class="pagination pagination-sm">
+                    <li><a href="#">Prev</a></li>
+                    <li><a href="#">1</a></li>
+                    <li><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#">4</a></li>
+                    <li><a href="#">5</a></li>
+                    <li><a href="#">Next</a></li>
+                  </ul>-->
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="clearfix"></div>
+        </div>
+        <!--EVENTS---------------------------------------------------------->
+        <div role="tabpanel" class="tab-pane fade" id="events" aria-labelledby="events-tab">
+          <div class="ads-display">
+            <div class="wrapper">
+              <div class="bs-example bs-example-tabs" role="tabpanel" data-example-id="togglable-tabs">
+                <div id="myTabContent" class="tab-content">
+                  <div>
+                    <div id="container">
+                      <div class="view-controls-list" id="viewcontrols">
+                        <!--<label>view :</label>
+                        <a class="gridview"><i class="glyphicon glyphicon-th"></i></a>
+                        <a class="listview active"><i class="glyphicon glyphicon-th-list"></i></a>-->
+                      </div>
+                      <div class="sort">
+                        <div class="sort-by">
+                        </div>
+                      </div>
+                      <div class="clearfix"></div>
+                      <div *ngIf="_userEvents.length<=0">
+                        <br><br>
+                        <h2>{{_user.Name}} hasn't created any Humanitarian Events yet</h2>
+                        <br><br>
+                      </div>
+                      <ul class="list" *ngIf="_userEvents.length>0">
+                        <div *ngFor="let humEvent of _userEvents">
+                          <a [routerLink]="['EventDetails', {id: humEvent.Id}]">
+                            <li>
+                              <img [src]="humEvent.Photo" title="" alt="" />
+                              <section class="list-left">
+                                <h5 class="title">{{humEvent.Caption}}</h5>
+                                <span class="adprice">{{humEvent.UserOwner.Name}} {{humEvent.UserOwner.Surname}}</span>
+                                <p class="catpath"></p>
+                              </section>
+                              <section class="list-right">
+                                <span class="date">Starting at: {{humEvent.StartingTime | date:'yyyy-MM-dd HH:mm'}}</span>
+                                <span class="cityname">{{humEvent.Address}} {{humEvent.City}}</span>
+                              </section>
+                              <div class="clearfix"></div>
+                            </li>
+                          </a>
+                        </div>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="clearfix"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<br><br><br>

@@ -1,0 +1,47 @@
+<ion-navbar *navbar>
+    <button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+    </button>
+
+    <ion-title>
+        {{user.Name}} {{user.Surname}}
+    </ion-title>
+
+    <ion-buttons end>
+        <button>
+            <ion-icon name="options"></ion-icon>
+        </button>
+    </ion-buttons>
+</ion-navbar>
+
+<div *ngIf="_isLoading">
+    <my-spinner></my-spinner>
+</div>
+
+
+<ion-content *ngIf="!_isLoading" padding>
+            <div class="profile-main">
+            <div class="profile-pic wthree">
+                <img [src]="user.UserPhoto" alt="">
+                <h2>{{user.Name}} {{user.Surname}}</h2>
+                <p><i class="fa fa-map-marker" style="color:#337ab7"></i> {{user.Address}}, {{user.City}}</p>
+                <p><i class="fa fa-envelope" style="color:#337ab7"></i> {{user.Email}}</p>
+            </div>
+            <div class="active w3">
+                <h4>About me:</h4>
+                <p>{{user.Description}}</p>
+            </div>
+            <br><br>
+            <div class="profile-ser">
+                <div class="profile-ser-grids">
+                    <i class="fa fa-list" aria-hidden="true"></i>
+                    <h4>Donations ({{donations.length}})</h4>
+                </div>
+                <div class="profile-ser-grids agileinfo">
+                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                    <h4>Events ({{humEvents.length}})</h4>
+                </div>
+                <div class="clear"> </div>
+            </div>
+        </div>
+</ion-content>

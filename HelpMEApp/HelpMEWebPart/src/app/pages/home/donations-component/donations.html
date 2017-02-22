@@ -1,0 +1,109 @@
+<div *ngIf="_isLoading">
+  <my-spinner></my-spinner>
+</div>
+
+<!-- Products -->
+<div class="total-ads main-grid-border">
+  <div class="container">
+    <div class="select-box" style="width:65%; margin: 0 auto;">
+      <div class="browse-category ads-list" style="width: 50%;">
+        <label>Category</label>
+        <select class="selectpicker show-tick" data-live-search="true" #category (change)="onCategoryChanged(category.value)" >
+          <option value="All">All</option>
+          <option value="Books">Books</option>
+          <option value="Chlotes">Chlotes</option>
+          <option value="Food">Food</option>
+          <option value="Footwear">Footwear</option>
+          <option value="Technology">Technology</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+      <div class="search-product ads-list" style="width: 50%;">
+        <label>Sub Category</label>
+        <select class="selectpicker show-tick" data-live-search="true" #subCategory (change)="onSubCategoryChanged(subCategory.value)">
+          <option value="All">All</option>
+          <option value="Kids">For Children</option>
+          <option value="Men">For Men</option>
+          <option value="Women">For Women</option>
+        </select>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+    <div class="all-categories">
+      <div class="search-hotel" style="width: 60%; margin: 0 auto;">
+        <h3 class="sear-head">Search for specific donation</h3>
+        <form>
+          <input type="submit" value=" " [disabled]>
+          <input type="text" placeholder="Type donation/event or owner name here..." #query (keyup)="search(query.value)">
+        </form>
+      </div>
+    </div>
+    <br>
+    <div class="ads-grid">
+      <div class="side-bar col-md-3">
+        <div class="search-hotel">
+          <h3 class="sear-head">Description contains</h3>
+          <form>
+            <input type="text" placeholder="Type Keywords Here..." #desc (keyup)="searchByDesc(desc.value)">
+            <input type="submit" value=" ">
+          </form>
+        </div>
+
+        <div class="search-hotel">
+          <h3 class="sear-head">Search By User Name/Surname</h3>
+          <form>
+            <input type="text" placeholder="Type keyword here..." #name (keyup)="searchByOwnerName(name.value)">
+            <input type="submit" value=" ">
+          </form>
+        </div>
+
+      </div>
+      <div class="ads-display col-md-9">
+        <div class="wrapper">
+          <div class="bs-example bs-example-tabs" role="tabpanel" data-example-id="togglable-tabs">
+            <ul id="myTab" class="nav nav-tabs nav-tabs-responsive" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#home" id="home-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="true">
+                  <span class="text">All</span>
+                </a>
+              </li>
+            </ul>
+            <div id="myTabContent" class="tab-content">
+              <div role="tabpanel" class="tab-pane fade in active" id="home" aria-labelledby="home-tab">
+                <div>
+                  <div id="container">
+                    <br>
+                    <div class="clearfix"></div>
+                    <ul class="list">
+                      <div *ngFor="let donation of _donations">
+                        <a [routerLink]="['DonationDetails', {id: donation.Id}]">
+                          <li>
+                            <img [src]="donation.Photos[0].PhotoPath" title="" alt="" />
+                            <section class="list-left">
+                              <h5 class="title">{{donation.Caption}}</h5>
+                              <span class="adprice">{{donation.Description}}</span>
+                              <p class="catpath">{{donation.Category}} » {{donation.SubCategory}}</p>
+                              <p>{{donation.Owner.Name}} {{donation.Owner.Surname}}</p>
+                            </section>
+                            <section class="list-right">
+                              <span class="date">Added Time</span>
+                              <span class="date">{{donation.TimeCreated | date:'dd-MM-yyyy HH:mm'}}</span>
+                              <span class="cityname">{{donation.City}}</span>
+                            </section>
+                            <div class="clearfix"></div>
+                          </li>
+                        </a>
+                      </div>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</div>

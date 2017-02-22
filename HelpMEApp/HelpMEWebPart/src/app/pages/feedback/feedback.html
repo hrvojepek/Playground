@@ -1,0 +1,33 @@
+<div class="happy-clients">
+  <div class="container">
+    <div class="happy-clients-head text-center wow fadeInRight" data-wow-delay="0.4s">
+      <h3>Comments of Our Registered Users</h3>
+      <p></p>
+    </div>
+    <div class="happy-clients-grids" >
+      <div class="col-md-4 happy-clients-grid wow bounceIn" *ngFor="let f of _feedbacks" style="float: left;" data-wow-delay="0.4s">
+        <div class="client">
+          <img [src]="f.UserPhoto" alt="" />
+        </div>
+        <div class="client-info">
+          <p><img src="images/open-quatation.jpg" class="open" alt="" />
+            {{f.FeedbackComment}}
+            <img src="images/close-quatation.jpg" class="closeq" alt="" /></p>
+          <h3>{{f.UserName}}</h3>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+  <br>
+  <div style="width: 100%; text-align: center;" *ngIf="_isUserLoggedIn">
+    <h3 style="color: white;">If You want to comment our website, click the button below</h3><br>
+    <a class="work" style="cursor: pointer;" (click)="commentPopupShowHide()">Comment</a>
+  </div>
+</div>
+<div class="clearfix"></div>
+
+<div *ngIf="_commentPopupShowing">
+  <add-feedback (c)="addComment($event)"></add-feedback>
+</div>

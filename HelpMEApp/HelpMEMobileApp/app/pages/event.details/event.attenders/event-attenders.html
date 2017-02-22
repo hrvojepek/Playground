@@ -1,0 +1,50 @@
+<ion-navbar *navbar>
+    <button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+    </button>
+
+    <ion-title>
+        Attending
+    </ion-title>
+</ion-navbar>
+
+<div *ngIf="_isLoading">
+    <my-spinner></my-spinner>
+</div>
+
+<ion-content *ngIf="!_isLoading">
+    <div padding>
+        <ion-item>
+            <br>
+            <ion-avatar item-left>
+                <img [src]="humEvent.UserOwner.UserPhoto">
+            </ion-avatar>
+            <h2>{{humEvent.UserOwner.Name}} {{humEvent.UserOwner.Surname}}</h2>
+            <p>Starting at: {{humEvent.StartingTime | date:'yyyy-MM-dd HH:mm'}}</p>
+        </ion-item>
+
+        <img [src]="humEvent.Photo">
+
+        <ion-card-content>
+            <br>
+            <p>{{humEvent.Description}}</p>
+        </ion-card-content>
+
+        <ion-row>
+            <ion-col width-50>
+                <div style="width:100%; text-align: center;">
+                    <i class="fa fa-heart fa-2x" [class.attending]="_userIsAttending" style="cursor: pointer; float: left;" (click)="attendOrNot()"></i>
+                    <span style="cursor: pointer;" (click)="showAttenders()">Attending: {{humEvent.UsersWhoAttending.length}}</span>
+                </div>
+            </ion-col>
+            <ion-col width-50>
+                <i class="fa fa-comment fa-2x" style="cursor: pointer; float: left; margin-right: 5%;"></i>
+                <span style="cursor: pointer;" (click)="showAttenders()"> Comments: {{humEvent.Comments.length}}</span>
+            </ion-col>
+            <ion-col center text-center>
+                <ion-note>
+                </ion-note>
+            </ion-col>
+        </ion-row>
+    </div>
+</ion-content>
