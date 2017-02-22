@@ -1,4 +1,5 @@
 HelpME Web Application
+Angular 2 application (version rc1) made in summer 2016
 
 ### Usage
 - Make sure you have [node.js](https://nodejs.org/) installed
