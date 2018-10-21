@@ -5,4 +5,4 @@ HelpME - Angular 2 web app with ASP.NET Core Web Api (used Entity Framework 7 co
 
 GalleryAdd - ASP.NET Web forms app for adding galleries, like, etc.
 
-AutoServie - Spring Boot app with Thymeleaf 
+AutoService - Spring Boot app with Thymeleaf 
