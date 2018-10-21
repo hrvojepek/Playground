@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:security="http://www.springframework.org/schema/security"
+	th:with="currentPage='users-table'">
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+		<meta name="description" content="Autoservis" />
+		<meta name="author" content="" />
+		<meta name="ctx" th:content="${#httpServletRequest.getContextPath()}" />
+		<!--  <link rel="icon" href="../../favicon.ico" />-->
+		
+		<title>Autoservis</title>
+		
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+		<script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+		<script src="https://cdn.datatables.net/1.10.13/js/dataTables.bootstrap.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<link rel="stylesheet" th:href="@{/css/style.css}" href="../../css/style.css" />
+		<link rel="stylesheet" href="https://cdn.datatables.net/1.10.13/css/dataTables.bootstrap.min.css" />
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+	</head>
+
+<body>
+	<div th:include="fragments/header::navigation"></div>
+
+	<div class="container">
+		<div class="row">
+			<br />
+			<h2>Kreiranje novog korisnika</h2>
+			<br /> <br />
+		</div>
+
+		<div class="row">
+			<div class="col-md-7">
+				<form class="form-horizontal" id="add-user-form"
+					th:action="@{/private/user/create}" method="post" role="form"
+					autocomplete="off">
+
+					<!-- Korisničko ime -->
+					<div class="form-group">
+						<label class="control-label col-sm-3" for="user.username">Korisničko
+							ime</label>
+						<div class="col-sm-9">
+							<input type="text" name="user.username" id="user.username" tabindex="1" class="form-control" placeholder="Korisničko ime" autocomplete="off" th:required="true" />
+						</div>
+					</div>
+					<!-- E-mail -->
+					<div class="form-group">
+						<label class="control-label col-sm-3" for="user.username">Email</label>
+						<div class="col-sm-9">
+							<input type="text" name="user.email" id="user.email" tabindex="2" class="col-sm-9 form-control" placeholder="E-mail" autocomplete="off" required="true" />
+						</div>
+					</div>
+					<!-- Nova lozinka -->
+					<div class="form-group">
+						<label class="control-label col-sm-3" for="user.username">Nova
+							lozinka</label>
+						<div class="col-sm-9">
+							<input type="password" name="newPassword" id="newPassword" tabindex="3" class="col-sm-9 form-control" placeholder="Lozinka" autocomplete="off" required="true" />
+						</div>
+					</div>
+					<!-- Potvrda nove lozinke -->
+					<div class="form-group">
+						<label class="control-label col-sm-3" for="user.username">Potvrda
+							nove lozinke</label>
+						<div class="col-sm-9">
+							<input type="password" name="newPasswordConfirm" id="newPasswordConfirm" tabindex="4" class="col-sm-9 form-control" placeholder="Potvrda lozinke" autocomplete="off" required="true" />
+						</div>
+					</div>
+					<!-- Status -->
+					<div class="form-group">
+						<label class="control-label col-sm-3" for="user.status">Status</label>
+						<div class="col-sm-9">
+							<select th:field="*{form.user.status}" id="form.user.status" tabindex="5" class="col-sm-9 form-control">
+								<option th:each="status : ${statuses}" th:value="${status}" th:text="${status}"></option>
+							</select>
+						</div>
+					</div>
+					<!-- Rola -->
+					<div class="form-group">
+						<label class="control-label col-sm-3" for="user.username">Korisnička
+							rola</label>
+						<div class="col-sm-9">
+							<select th:field="*{form.user.role}" id="form.user.role" tabindex="6" class="col-sm-9 form-control">
+								<option th:each="role : ${roles}" th:value="${role.id}" th:text="${role.name}"></option>
+							</select>
+						</div>
+					</div>
+					<!-- As employee -->
+					<div class="form-group hidden" id="zaposlen">
+						<label class="control-label col-sm-3">Zaposlen na stanici</label>
+						<div class="col-sm-9">
+							<select th:field="*{form.user.employeeOfStation}" id="form.user.employeeOfStation" class="col-sm-9 form-control">
+								<option th:each="station : ${stations}" th:value="${station.id}" th:text="${station.name}"></option>
+							</select>
+						</div>
+					</div>
+					<!-- As manager -->
+					<div class="form-group hidden" id="voditelj">
+						<label class="control-label col-sm-3">Voditelj stanice</label>
+						<div class="col-sm-9">
+							<select th:field="*{form.user.managerOfStation}" id="form.user.managerOfStation" class="col-sm-9 form-control">
+								<option th:each="station : ${stations}" th:value="${station.id}" th:text="${station.name}"></option>
+							</select>
+						</div>
+					</div>
+
+
+					<!-- Ime -->
+					<div class="form-group">
+						<label class="control-label col-sm-3">Ime</label>
+						<div class="col-sm-9">
+							<input type="text" name="user.firstName" id="user.firstName" class="col-sm-9 form-control" placeholder="Ime" autocomplete="off" />
+						</div>
+					</div>
+					<!-- Prezime -->
+					<div class="form-group">
+						<label class="control-label col-sm-3">Prezime</label>
+						<div class="col-sm-9">
+							<input type="text" name="user.lastName" id="user.lastName" class="col-sm-9 form-control" placeholder="Prezime" autocomplete="off" />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-sm-offset-2 col-sm-10">
+							<button type="submit" class="btn btn-primary pull-right">Spremi</button>
+						</div>
+					</div>
+				</form>
+
+			</div>
+		</div>
+
+	</div>
+
+	<footer class="footer-bottom"
+		th:include="fragments/footer :: footer-private"></footer>
+
+	<script type="text/javascript">
+	    $('#form\\.user\\.role').on('change', function() {
+	    	var roleId = $('#form\\.user\\.role').val();
+	    	if (roleId == 2) {
+	    		$('#voditelj').removeClass('hidden');
+	    		if ($('#zaposlen').hasClass('hidden') != true) {
+	    			$('#zaposlen').addClass('hidden');
+	    		}
+	    	} else if (roleId == 3) {
+	    		$('#zaposlen').removeClass('hidden');
+	    		if ($('#voditelj').hasClass('hidden') != true) {
+	    			$('#voditelj').addClass('hidden');
+	    		}
+	    	} else {
+	    		if ($('#zaposlen').hasClass('hidden') != true) {
+	    			$('#zaposlen').addClass('hidden');
+	    		}
+	    		if ($('#voditelj').hasClass('hidden') != true) {
+	    			$('#voditelj').addClass('hidden');
+	    		}
+	    	}
+	    });
+    </script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	th:with="currentPage='repair'">
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+		<meta name="description" content="Autoservis" />
+		<meta name="author" content="" />
+		<!--  <link rel="icon" href="../../favicon.ico" />-->
+		
+		<title>Autoservis</title>
+				
+		<link rel="stylesheet" th:href="@{/css/style.css}" href="/css/style.css" />
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" /> 
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> 
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
+	</head>
+	
+	<body>
+		<div th:include="fragments/header :: navigation"></div>
+		
+		<div class="container" layout:fragment="content">
+			<h2>Pregled usluge servisa</h2>
+			
+			<div class="row">
+				<div class="form-group col-xs-12">
+	    			<label class="col-xs-2">Naziv usluge</label>
+	    			<div class="col-xs-10">
+	    				<span th:text="${repair.name}"></span>
+	    			</div>
+	    		</div>
+	    		<div class="form-group col-xs-12">
+	    			<label class="col-xs-2">Cijena po satu</label>
+	    			<div class="col-xs-10">
+	    				<span th:text="${repair.pricePerHour}"></span>
+	    			</div>
+	    		</div>
+	    		<div sec:authorize="hasAuthority('repair.edit')" class="form-group">
+	    			<div class="col-sm-offset-2 col-sm-10 text-center">
+	    				<a class="btn btn-info" th:href="@{/private/repair/edit/{id}(id=${repair.id})}">Ažuriraj</a>
+	    			</div>
+	    		</div>
+			</div><!-- /.row -->
+		</div><!-- /.container -->
+		
+		<footer class="footer-bottom" th:include="fragments/footer :: footer"></footer>
+	</body>
+</html>

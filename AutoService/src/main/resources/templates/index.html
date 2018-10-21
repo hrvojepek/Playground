@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	th:with="currentPage='index'">
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+		<meta name="description" content="Autoservis" />
+		<meta name="author" content="" />
+		<!--  <link rel="icon" href="../../favicon.ico" />-->
+		
+		<title>Autoservis</title>
+				
+			<link rel="stylesheet" href="https://cdn.datatables.net/1.10.13/css/dataTables.bootstrap.min.css" /> 
+			<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" /> 
+ 			<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> 
+			<script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script> 
+			<script src="https://cdn.datatables.net/1.10.13/js/dataTables.bootstrap.min.js"></script> 
+			<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
+		
+<!-- 		<th:block layout:fragment="javascript">
+			<script type="text/javascript" th:src="@{/bower_components/jquery/dist/jquery.min.js}"
+				src="bower_components/jquery/dist/jquery.min.js"></script>
+			<script type="text/javascript" th:src="@{/bower_components/datatables/media/js/jquery.dataTables.js}"
+				src="bower_components/datatables/media/js/jquery.dataTables.js"></script>
+			<script type="text/javascript" th:src="@{/bower_components/datatables-plugins-bootstrap3/dist/js/datatables-plugins-bootstrap3.js}"
+				src="bower_components/datatables-plugins-bootstrap3/dist/js/datatables-plugins-bootstrap3.js"></script>
+			<script type="text/javascript" th:src="@{/dist/js/bootstrap.min.js}" src="/dist/js/bootstrap.min.js"></script>
+		</th:block> -->
+		<th:block layout:fragment="stylesheet">
+		<!-- 	<link rel="stylesheet" th:href="@{/dist/css/bootstrap.min.css}" href="dist/css/bootstrap.min.css" />
+			<link rel="stylesheet" th:href="@{/bower_components/datatables-plugins-bootstrap3/dist/css/datatables-plugins-bootstrap3.css}"
+				href="bower_components/datatables-plugins-bootstrap3/dist/css/datatables-plugins-bootstrap3.css" /> -->
+			<link rel="stylesheet" th:href="@{/css/style.css}" href="/css/style.css" />
+		</th:block>
+	</head>
+	
+	<body>
+		<div th:include="fragments/header :: navigation"></div>
+	
+		<!-- Main jumbotron for a primary marketing message or call to action -->
+		<div class="jumbotron">
+			<div class="container main-container">
+				<h1>Tokić servis!</h1>
+				<p>Tokić d.o.o. ovlašteni je uvoznik i distributer preko 150 najpoznatijih svjetskih proizvođača dijelova za sve vrste osobnih i lakih teretnih automobila.</p>
+				<p>
+					<a class="btn btn-primary btn-lg" href="http://www.autoplus.hr/tokic.aspx" target="_blank" role="button">Službena stranica &raquo;</a>
+				</p>
+			</div>
+		</div>
+	
+		<div class="container">
+			<!-- Example row of columns -->
+			<div class="row">
+				<div class="col-md-4 heading-middle">
+					<img th:src="@{/icons/wrench.png}" />
+					<h2>Popravci</h2>
+					<p>Zajedno s franšiznim partnerima Tokić d.o.o. najveći je prodajni lanac autodijelova u Hrvatskoj.2008. godine Tokić postaje članom ATR International-a, vodeće svjetske udruge distributera autodijelova.Iste godine pokreće i vlastitu robnu marku TQ. Sjedište tvrtke Tokić je Vinogradska 49, Sesvete, a Uprava se nalazi na adresi Slavonska avenija 3, Zagreb.</p>
+					<!--<p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>-->
+				</div>
+				<div class="col-md-4 heading-middle">
+					<img th:src="@{/icons/car_big.png}" />
+					<h2>Dijelovi</h2>
+					<p>Kroz mrežu od 100 prodavaonica diljem Hrvatske i BiH, Tokić d.o.o. nudi više od 150.000 različitih artikala u sljedećim grupama proizvoda: karoserija, dijelovi motora, kvačila i dijelovi transmisija, dijelovi upravljanje i ovjes,  kočioni sustav, ispušni sustav, elektrika i elektronika, filteri, akumulatori, klimatizacija, remenje i razvod motora, rashladni sustav i grijanje, maziva i specijalne tekućine, autokozmetika i autozaštita, alati, servisna oprema te dodatna.</p>
+					<!--<p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>-->
+				</div>
+				<div class="col-md-4 heading-middle">
+					<img th:src="@{/icons/battery_new.png}" />
+					<h2>Performanse</h2>
+					<p>Svi dobavljači zadovoljavaju najviše međunarodne standarde kvalitete i sigurnosti (ISO 9000, ISO 14000, ISO/TS/16949 i sl.), a većina njih proizvodi za prvu ugradnju.</p>
+					<!--<p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>-->
+				</div>
+			</div>
+			<br /> <br /> <br /> <br />
+		</div>
+		<!-- /container -->
+	
+		<footer class="footer-bottom" th:include="fragments/footer :: footer"></footer>
+	</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:security="http://www.springframework.org/schema/security"
+	th:with="currentPage='reservations'">
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+		<meta name="description" content="Autoservis" />
+		<meta name="author" content="" />
+		<meta name="ctx" th:content="${#httpServletRequest.getContextPath()}" />
+		<!--  <link rel="icon" href="../../favicon.ico" />-->
+		
+		<title>Autoservis</title>
+				
+ 		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+		<script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+		<script src="https://cdn.datatables.net/1.10.13/js/dataTables.bootstrap.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script type="text/javascript" th:src="@{/js/index-datatables.js}" src="../js/index-datatables.js"></script>
+		<link rel="stylesheet" th:href="@{/css/style.css}" href="css/style.css" />
+		<link rel="stylesheet" href="https://cdn.datatables.net/1.10.13/css/dataTables.bootstrap.min.css" />
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+	</head>
+	
+	<body>
+		<header th:include="fragments/header::navigation"></header>
+		<div class="container">
+				
+			<div class="row">
+				<br />
+				<h2 sec:authorize="hasRole('ROLE_Customer')">Moje rezervacije:</h2>
+				<h2 sec:authorize="hasAnyRole('ROLE_Admin', 'ROLE_Manager', 'ROLE_Employee')">Sve rezervacije:</h2>
+				<br />
+				<br />
+			</div>
+			
+			<table id="table_id" class="table table-striped table-bordered index-datatable" cellspacing="0" width="100%">
+				<thead class="index-datatable-header">
+					<tr>
+						<th>Stanica</th>
+						<th>Klijent</th>
+						<th>Početak servisa</th>
+						<th>Predviđeni završetak servisa</th>
+						<th>Status</th>
+						<th></th>
+						<th></th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="reservation : ${reservations}">
+						<td th:text="${reservation.station.name}"></td>
+						<td th:text="${reservation.customer.username}"></td>
+						<td th:text="${reservation.repairStartDate}"></td>
+						<td>
+							<span th:if="${reservation.estimatedRepairEndDate}" th:text="${reservation.estimatedRepairEndDate}"></span>
+						</td>
+						<td th:text="${reservation.reservationStatus}">	</td>
+						<td>
+							<a th:href='@{/private/reservation/view/{id}(id=${reservation.id})}'>Detaljnije</a>
+						</td>
+						<td>
+							<a sec:authorize="hasAnyRole('ROLE_Admin', 'ROLE_Manager', 'ROLE_Employee')" th:if="${reservation.reservationStatus.toString() != 'BILLED'}"
+								th:href='@{/private/reservation/edit/{id}(id=${reservation.id})}'>Ažuriraj</a>
+							<a sec:authorize="hasRole('ROLE_Customer')" th:if="${reservation.reservationStatus.toString() == 'RESERVED'}"
+								th:href='@{/private/reservation/edit/{id}(id=${reservation.id})}'>Ažuriraj</a>
+						</td>
+						<td>
+							<a sec:authorize="hasAnyRole('ROLE_Admin', 'ROLE_Manager', 'ROLE_Employee')" th:if="${reservation.reservationStatus.toString() == 'REPAIRED'}"
+								th:href='@{/private/receipt/new/{id}(id=${reservation.id})}'>Naplati</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	
+		<footer class="footer-bottom" th:include="fragments/footer :: footer-private"> </footer>
+	
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$('#table').DataTable();
+			});
+		</script>
+	</body>
+</html>

@@ -1,0 +1,209 @@
+	<!DOCTYPE html>
+	<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:th="http://www.thymeleaf.org"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		xmlns:security="http://www.springframework.org/schema/security"
+		th:with="currentPage='users-table'">
+		<head>
+			<meta charset="utf-8" />
+			<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+			<meta name="viewport" content="width=device-width, initial-scale=1" />
+			<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+			<meta name="description" content="Autoservis" />
+			<meta name="author" content="" />
+			<meta name="ctx" th:content="${#httpServletRequest.getContextPath()}" />
+			<!--  <link rel="icon" href="../../favicon.ico" />-->
+			
+			<title>Autoservis</title>
+			
+			<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+			<script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+			<script src="https://cdn.datatables.net/1.10.13/js/dataTables.bootstrap.min.js"></script>
+			<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+			<link rel="stylesheet" th:href="@{/css/style.css}" href="../../css/style.css" />
+			<link rel="stylesheet" href="https://cdn.datatables.net/1.10.13/css/dataTables.bootstrap.min.css" />
+			<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+		</head>
+		
+		<body>
+			<div th:include="fragments/header::navigation"></div>
+		
+			<div class="container">
+				<div class="row">
+					<br />
+					<h2 th:if="${myProfile}">Ažuriranje vlastitih podataka:</h2>
+					<h2 th:unless="${myProfile}">Ažuriranje korisničkih podataka:</h2>
+					<br /> <br />
+				</div>
+		
+				<div class="row">
+					<div class="col-md-7">
+						<form class="form-horizontal" id="edit-reservation-form" th:action="@{/private/user/update}" method="post" role="form" autocomplete="off">
+							<input type="text" name="user.id" id="user.id" class="hidden" th:value="${user.id}"/>
+							<!-- Korisničko ime -->
+							<div class="form-group">
+								<label class="control-label col-sm-3" for="user.username">Korisničko ime</label>
+								<div class="col-sm-9">
+									<input type="text" class="form-control" id="user.username"  tabindex="1" 
+										placeholder="Korisničko ime" autocomplete="off" th:value="${user.username}" th:required="true" />
+								</div>
+							</div>
+							<!-- Ime -->
+							<div class="form-group">
+								<label class="control-label col-sm-3" for="user.firstName">Ime</label>
+								<div class="col-sm-9">
+									<input type="text" class="form-control" name="user.firstName" id="user.firstName" tabindex="2" placeholder="Ime" 
+									autocomplete="off" th:value="${user.firstName}"/>
+								</div>
+							</div>
+								<!-- Prezime -->
+							<div class="form-group">
+								<label class="control-label col-sm-3" for="user.lastName">Prezime</label>
+								<div class="col-sm-9">
+									<input type="text" class="form-control" name="user.lastName" id="user.lastName" tabindex="3" placeholder="Prezime" 
+									autocomplete="off" th:value="${user.lastName}"/>
+								</div>
+							</div>
+							<!-- E-mail -->
+							<div class="form-group">
+								<label class="control-label col-sm-3" for="user.email">Email</label>
+								<div class="col-sm-9">
+									<input type="email" class="form-control" id="user.email" tabindex="4" placeholder="Email" 
+									autocomplete="off" th:value="${user.email}"/>
+								</div>
+							</div>
+							<!-- Status -->
+							<div class="form-group" sec:authorize="hasAnyRole('ROLE_Admin', 'ROLE_Manager', 'ROLE_Employee')">
+								<label class="control-label col-sm-3" for="form.user.userStatus">Status korisnika</label>
+								<div class="col-sm-9"  th:field="*{form.user.userStatus}" id="form.user.userStatus">
+								<!-- admin smije mijenjati status korisnika -->
+									<select id="reservationStation" class="form-control" sec:authorize="hasRole('ROLE_Admin')">
+										<option th:each="status : ${statuses}" th:value="${status}" th:text="${status}"></option>
+									</select> <!-- TODO: treba dohvatiti sve poslovnice -->
+
+									<div sec:authorize="hasRole('ROLE_Manager')">
+										<!-- manager can edit status -->
+										<select th:field="*{form.user.userStatus}" id="form.user.userStatus" class="form-control" th:if="${managerEdit == true}">
+											<option th:each="status : ${statuses}" th:value="${status}" th:text="${status}"></option>
+										</select>
+										<!-- manager can't edit status -->
+										<div class="col-sm-9 form-control-static" th:if="${managerEdit != true}">
+											<span th:text="${user.userStatus}"></span>
+											<input type="text" name="user.userStatus" id="user.userStatus" class="hidden form-control" th:value="${user.userStatus}"/>
+										</div>
+									
+									</div>
+									<div class="col-sm-9 form-control-static" sec:authorize="hasRole('ROLE_Employee')">
+										<span th:text="${user.userStatus}"></span>
+										<input type="text" name="user.userStatus" id="user.userStatus" class="hidden form-control" th:value="${user.userStatus}"/>
+									</div>
+											
+								</div>
+							</div>
+
+							<div class="form-group">
+								<div class="col-sm-9">
+									<input sec:authorize="hasRole('ROLE_Customer')" type="text" name="user.userStatus" id="user.userStatus" class="hidden form-control" th:value="${user.userStatus}"/>
+								</div>
+							</div>
+							
+							<!-- Role -->		
+							<div class="form-group" sec:authorize="hasAnyRole('ROLE_Admin', 'ROLE_Manager', 'ROLE_Employee')">
+								<label class="control-label col-sm-3" for="reservationCustomer">Rola</label>
+								<div sec:authorize="hasRole('ROLE_Admin')" >
+									<!-- Select role when it's not my profile or Customer profile -->
+									<div class="col-sm-9">
+										<select th:field="*{form.user.role}" id="form.user.role" class="form-control" th:if="${user.role.id != 4 and myProfile != true}">
+											<option th:each="role : ${roles}" th:value="${role.id}" th:text="${role.name}"></option>
+										</select>
+									</div>
+								
+									<!-- Only show role when it's my profile or Customer profile -->
+									<div class="col-sm-9" th:if="${user.role.id == 4 or myProfile == true}">
+										<span th:text="${user.role.name}" ></span>
+										<input type="text" name="user.role" id="user.role" class="hidden form-control" th:value="${user.role.id}"/>
+									</div>
+								</div>
+								<!-- If auth user is manager or employee show role but they can't edit it -->
+								<div class="col-sm-9 form-control-static" sec:authorize="hasAnyRole('ROLE_Manager', 'ROLE_Employee')">
+									<span th:text="${user.role.name}"></span>
+									<input type="text" name="user.role" id="user.role" class="hidden form-control" th:value="${user.role.id}"/>
+								</div>
+
+
+							</div>
+
+							<div class="form-group">
+								<div class="col-sm-9">
+									<input sec:authorize="hasRole('ROLE_Customer')" type="text" name="user.role" id="user.role" class="hidden form-control" th:value="${user.role.id}"/>
+								</div>
+							</div>
+
+							<!-- Admin selection to add manager to a service station -->
+							<div class="form-group" sec:authorize="hasRole('ROLE_Admin')" th:if="${user.role.id == 2}">
+							<label class="control-label col-sm-3">Dodaj kao voditelja stanice</label>
+								<div class="col-sm-9">
+									<select th:field="*{form.user.managerOfServiceStation}" id="form.user.managerOfServiceStation" class="form-control" >
+									<option th:each="station : ${stations}" th:value="${station.id}" th:text="${station.stationName}"></option>
+								</select>
+								</div>
+							</div>
+							<!-- Show if user is manager of service station -->
+							<div class="form-group" sec:authorize="hasRole('ROLE_Manager')" th:if="${user.managerOfServiceStation}">
+							<label class="control-label col-sm-3c">Voditelj stanice</label>
+							<span class="control-label col-sm-3" th:text="${user.managerOfServiceStation.stationName}"></span>
+								<div class="col-sm-9">
+									<input type="text" name="user.managerOfServiceStation" id="user.managerOfServiceStation" class="hidden form-control" th:value="${user.managerOfServiceStation.id}"/>
+								</div>
+							</div>
+
+							<!-- Admin selection to add employee to a station -->
+							<div class="form-group" sec:authorize="hasRole('ROLE_Admin')" th:if="${user.role.id == 3}">
+							<label class="control-label col-sm-3">Dodaj kao zaposlenika stanice</label>
+								<div class="col-sm-9">
+									<select th:field="*{form.user.employeeOfServiceStation}" id="form.user.employeeOfServiceStation" class="form-control">
+									<option th:each="station : ${stations}" th:value="${station.id}" th:text="${station.stationName}"></option>
+								</select>
+								</div>
+							</div>
+
+							<!-- Show on which station he is employed -->
+							<div class="form-group" sec:authorize="hasAnyRole('ROLE_Manager', 'ROLE_Employee')" th:if="${user.employeeOfServiceStation}">
+							<label class="control-label col-sm-3">Zaposlen na stanici</label>
+    						<span class="col-sm-9 form-control-static" th:text="${user.employeeOfServiceStation.stationName}"></span>
+								<div class="col-sm-9">
+									<input type="text" name="user.employeeOfServiceStation" id="user.employeeOfServiceStation" class="hidden form-control" th:value="${user.employeeOfServiceStation.id}"/>
+								</div>
+							</div>
+
+							<!-- Nova lozinka -->
+							<div class="form-group">
+							<label class="control-label col-sm-3">Nova lozinka</label>
+								<div class="col-sm-9">
+									<input type="password" name="newPassword" id="newPassword" tabindex="" class="form-control" placeholder="Nova lozinka" autocomplete="off" />
+								</div>
+							</div>
+
+							<!-- Potvrda nove lozinke -->
+							<div class="form-group">
+							<label class="control-label col-sm-3">Potvrda nove lozinke</label>
+								<div class="col-sm-9">
+									<input type="password" name="newPasswordConfirm" id="newPasswordConfirm" tabindex="" class="form-control" placeholder="Potvrda nove lozinke" autocomplete="off" />
+								</div>
+							</div>
+							<div class="form-group">
+							<div class="col-sm-offset-2 col-sm-10">
+								<button type="submit" class="btn btn-primary pull-right">Izmijeni</button>
+							</div>
+						</div>
+						</form>
+		
+					</div>
+				</div>
+		
+			</div>
+		
+			<footer class="footer-bottom"
+				th:include="fragments/footer :: footer-private"></footer>
+		</body>
+	</html>

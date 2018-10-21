@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:security="http://www.springframework.org/schema/security"
+	th:with="currentPage='reservations'">
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+		<meta name="description" content="Autoservis" />
+		<meta name="author" content="" />
+		<meta name="ctx" th:content="${#httpServletRequest.getContextPath()}" />
+		<!--  <link rel="icon" href="../../favicon.ico" />-->
+		
+		<title>Autoservis</title> 
+		
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+ 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" />
+ 		<link rel="stylesheet" th:href="@{/css/style.css}" href="css/style.css" /> 
+ 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> 
+ 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+ 		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+ 		<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script> 
+	</head>
+
+<body>
+	<div th:include="fragments/header::navigation"></div>
+
+	<div class="container">
+		<div class="row">
+			<br />
+			<h2>Nova rezervacija</h2>
+			<br /> <br />
+		</div>
+
+		<div class="row">
+			<div class="col-md-7">
+				<form class="form-horizontal" id="add-reservation-form" th:action="@{/private/reservation/create}" method="post" role="form" autocomplete="off">
+					<input class="hidden" type="text" name="mode" id="mode" th:value="${form.mode}" />
+					<!-- Odabir stanice -->
+					<div class="form-group">
+						<label class="control-label col-sm-4" for="user.username">Stanica</label>
+						<div class="col-sm-8">
+							<select th:field="*{form.reservation.station}" id="form.reservation.station" tabindex="1" class="form-control">
+								<option th:each="station : ${stations}" th:value="${station.id}" th:text="${station.name}"></option>
+							</select>
+						</div>
+					</div>
+					<!-- termin kada klijentu paše dovesti auto na popravak -->
+					<div class="form-group">
+						<label class="control-label col-sm-4" for="user.username">Termin početka servisa</label>
+						<div class="col-sm-8 input-group date">
+							<input type="text" name="repairStartDate" id="repairStartDate" class="form-control" />
+							<span class="input-group-addon">
+		                        <span class="glyphicon glyphicon-calendar"></span>
+		                    </span>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-sm-offset-2 col-sm-10">
+							<button type="submit" class="btn btn-primary pull-right">Rezerviraj</button>
+						</div>
+					</div>
+				</form>
+
+			</div>
+		</div>
+
+	</div>
+
+	<footer class="footer-bottom"
+		th:include="fragments/footer :: footer-private"></footer>
+
+	<script type="text/javascript">
+		//this date time picker is not working properly o_O
+		$('.date').datetimepicker({
+			format : 'YYYY-MM-DD HH:mm'
+		});
+	</script>
+</body>
+</html>

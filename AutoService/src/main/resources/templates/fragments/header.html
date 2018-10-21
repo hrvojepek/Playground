@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="hr" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:security="http://www.springframework.org/schema/security">
+
+<div th:fragment="navigation">
+	<nav class="navbar navbar-default navbar-static-top">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+			</div>
+			<div id="navbar" class="collapse navbar-collapse">
+				<ul class="nav navbar-nav main-nav">
+					<li th:classappend="${currentPage eq 'index'} ? 'active' : ''">
+						<a sec:authorize="isAnonymous()" th:href="@{/}">Home</a>
+						<a sec:authorize="isAuthenticated()" th:href="@{/private/}">Home</a>
+					</li>
+					
+					
+					<li sec:authorize="isAuthenticated()" class="dropdown" th:classappend="${currentPage eq 'manufacturer'} ? 'active' : ''">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Proizvođači <span class="caret"></span></a>
+						<ul class="dropdown-menu dropdown-lr" role="menu">
+							<li>
+								<a th:href="@{/private/manufacturers/}">Pregled proizvođača</a>
+							</li>
+							<li sec:authorize="hasAuthority('manufacturer.create')">
+								<a th:href="@{/private/manufacturer/new/}">Novi proizvođač</a>
+							</li>
+						</ul>
+					</li>
+					
+					
+					<!-- 						<li th:classappend="${currentPage eq 'reservation'} ? 'active' : ''"> -->
+					<!-- 							<a th:href="@{/reservation/}">Rezervacija</a> -->
+					<!-- 						</li> -->
+					<li th:classappend="${currentPage eq 'items'} ? 'active' : ''">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Proizvodi <span class="caret"></span></a>
+						<ul class="dropdown-menu dropdown-lr" role="menu">
+							<li sec:authorize="isAnonymous()">
+								<a th:href="@{/items/}">Pregled proizvoda</a>
+							</li>
+							<li sec:authorize="isAuthenticated()">
+								<a th:href="@{/private/items/}">Pregled proizvoda</a>
+							</li>
+							<li sec:authorize="hasAuthority('item.create')">
+								<a th:href="@{/private/item/new}">Novi proizvod</a>
+							</li>
+						</ul>
+					</li>
+					<li th:classappend="${currentPage eq 'repair'} ? 'active' : ''">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Usluge servisa <span class="caret"></span></a>
+						<ul class="dropdown-menu dropdown-lr" role="menu">
+							<li sec:authorize="isAnonymous()">
+								<a th:href="@{/repairs/}">Pregled usluga</a>
+							</li>
+							<li sec:authorize="isAuthenticated()">
+								<a th:href="@{/private/repairs/}">Pregled usluga</a>
+							</li>
+							<li sec:authorize="hasAuthority('repair.create')">
+								<a th:href="@{/private/repair/new}">Nova usluga</a>
+							</li>
+						</ul>
+
+					</li>
+					<li th:classappend="${currentPage eq 'stations'} ? 'active' : ''">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Servisne stanice <span class="caret"></span></a>
+						<ul class="dropdown-menu dropdown-lr" role="menu">
+							<li sec:authorize="isAnonymous()">
+								<a th:href="@{/stations/}">Pregled stanica</a>
+							</li>
+							<li sec:authorize="isAuthenticated()">
+								<a th:href="@{/private/stations/}">Pregled stanica</a>
+							</li>
+							<li sec:authorize="hasAuthority('serviceStation.create')">
+								<a th:href="@{/private/station/new}">Nova stanica</a>
+							</li>
+						</ul>
+					</li>
+					<li sec:authorize="isAuthenticated()" class="dropdown" th:classappend="${currentPage eq 'reservations'} ? 'active' : ''">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Rezervacije <span class="caret"></span></a>
+						<ul class="dropdown-menu dropdown-lr" role="menu">
+							<li sec:authorize="hasAuthority('reservation.view')">
+								<a th:href="@{/private/myReservations/}">Moje rezervacije</a>
+							</li>
+							<li sec:authorize="hasAuthority('reservation.create')">
+								<a th:href="@{/private/reservation/new/}">Nova rezervacija</a>
+							</li>
+							<li sec:authorize="hasAuthority('reservation.view.admin')">
+								<a th:href="@{/private/reservations/}">Pregled rezervacija</a>
+							</li>
+						</ul>
+					</li>
+					<li sec:authorize="isAuthenticated()" class="dropdown" th:classappend="${currentPage eq 'receipts'} ? 'active' : ''">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Računi <span class="caret"></span></a>
+						<ul class="dropdown-menu dropdown-lr" role="menu">
+							<li sec:authorize="hasRole('ROLE_Customer')">
+								<a th:href="@{/private/myReceipts/}">Moji računi</a>
+							</li>
+							<li sec:authorize="hasAnyRole('ROLE_Admin', 'ROLE_Manager', 'ROLE_Employee')">
+								<a th:href="@{/private/receipts/}">Pregled svih računa</a>
+							</li>
+						</ul>
+					</li>
+					<li sec:authorize="isAuthenticated()" class="dropdown" th:classappend="${currentPage eq 'users-table'} ? 'active' : ''">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Korisnici <span class="caret"></span></a>
+						<ul class="dropdown-menu dropdown-lr" role="menu">
+							<li>
+								<a th:href="@{/private/user/view/}">Moj profil</a>
+							</li>
+							<li sec:authorize="hasAnyRole('ROLE_Admin', 'ROLE_Manager', 'ROLE_Employee')">
+								<a th:href="@{/private/clients/}">Klijenti</a>
+							</li>
+							<li sec:authorize="hasAnyRole('ROLE_Admin', 'ROLE_Manager', 'ROLE_Employee')">
+								<a th:href="@{/private/users-table/}">Zaposlenici</a>
+							</li>
+							<li sec:authorize="hasRole('ROLE_Admin')">
+								<a th:href="@{/private/user/add/}">Kreiraj novog korisnika</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right main-nav-right">
+					<li sec:authorize="isAnonymous()" class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Register <span class="caret"></span></a>
+						<ul class="dropdown-menu dropdown-lr" role="menu">
+							<div class="col-md-12">
+								<div class="text-center">
+									<h3>
+										<b>Register</b>
+									</h3>
+								</div>
+								<form id="register-form" th:action="@{/user/create}" method="post" role="form" autocomplete="off">
+									<div class="form-group">
+										<input type="text" name="user.username" id="user.username" tabindex="1" class="form-control" placeholder="Username" value="" required="true" />
+									</div>
+									<div class="form-group">
+										<input type="email" name="user.email" id="user.email" tabindex="2" class="form-control" placeholder="Email Address" value="" required="true" />
+									</div>
+									<div class="form-group">
+										<input type="password" name="newPassword" id="newPassword" tabindex="3" class="form-control" placeholder="Password" required="true" />
+									</div>
+									<div class="form-group">
+										<input type="password" name="newPasswordConfirm" id="newPasswordConfirm" tabindex="4" class="form-control" placeholder="Confirm Password" required="true" />
+									</div>
+									<div class="form-group">
+										<input type="text" name="user.firstName" id="user.firstName" tabindex="5" class="form-control" placeholder="First name" value="" />
+									</div>
+									<div class="form-group">
+										<input type="text" name="user.lastName" id="user.lastName" tabindex="6" class="form-control" placeholder="Last name" value="" />
+									</div>
+									<div class="form-group">
+										<div class="row">
+											<div class="col-xs-6 col-xs-offset-3">
+												<input type="submit" name="register-submit" id="register-submit" tabindex="7" class="form-control btn btn-info" value="Register Now" />
+											</div>
+										</div>
+									</div>
+								</form>
+							</div>
+						</ul>
+					</li>
+					<li class="dropdown" sec:authorize="isAnonymous()">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown"> Log In <span class="caret"></span></a>
+						<ul class="dropdown-menu dropdown-lr" role="menu">
+							<div class="col-lg-12">
+								<div class="text-center">
+									<h3>
+										<b>Log In</b>
+									</h3>
+								</div>
+								<form id="login-form" th:action="@{/login}" method="post" role="form" autocomplete="off">
+									<div th:if="${param.error}" class="alert alert-danger">
+										<p>Invalid username and/or password.</p>
+									</div>
+
+									<div class="form-group">
+										<label for="username">Username</label>
+										<input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Username" value="" autocomplete="off" />
+									</div>
+
+									<div class="form-group">
+										<label for="password">Password</label>
+										<input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password" autocomplete="off" />
+									</div>
+
+									<div class="form-group">
+										<div class="row">
+											<div class="col-xs-6 col-xs-offset-3">
+												<input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-success" value="Log In" />
+											</div>
+										</div>
+									</div>
+								</form>
+							</div>
+						</ul></li>
+					<li sec:authorize="isAuthenticated()">
+						<a th:href="@{/logout/}">Log out</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<div th:if="${errors}" class="alert alert-danger">
+		<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+		<span th:each="error : ${errors}"><span th:text="${error}"></span></span>
+	</div>
+	<div th:if="${success}" class="alert alert-success">
+		<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+		<span th:each="success : ${success}"><span th:text="${success}"></span></span>
+	</div>
+</div>
+</html>

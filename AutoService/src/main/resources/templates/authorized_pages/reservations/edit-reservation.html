@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:security="http://www.springframework.org/schema/security"
+	th:with="currentPage='reservations'">
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+		<meta name="description" content="Autoservis" />
+		<meta name="author" content="" />
+		<meta name="ctx" th:content="${#httpServletRequest.getContextPath()}" />
+		<!--  <link rel="icon" href="../../favicon.ico" />-->
+		
+		<title>Autoservis</title>
+		
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+ 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" />
+ 		<link rel="stylesheet" th:href="@{/css/style.css}" href="css/style.css" /> 
+ 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> 
+ 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+ 		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+ 		<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script> 
+	</head>
+	
+	<body>
+		<div th:include="fragments/header::navigation"></div>
+	
+		<div class="container">
+			<div class="row">
+				<br />
+				<h2>Ažuriranje rezervacije:</h2>
+				<br /> <br />
+			</div>
+	
+			<div class="row">
+				<div class="col-md-7">
+					<form class="form-horizontal" id="add-reservation-form" th:action="@{/private/reservation/update}" method="post" role="form" autocomplete="off">
+						<input class="hidden" type="text" name="mode" id="mode" th:value="${form.mode}" />
+						<input class="hidden" type="text" name="reservation.id" id="reservation.id" th:value="${reservation.id}" />
+						
+						<!-- Odabir stanice -->
+						<div class="form-group">
+							<label class="control-label col-sm-3">Stanica</label>
+							<div class="col-sm-9" sec:authorize="hasRole('ROLE_Customer')">
+								<select th:field="*{form.reservation.station}" id="form.reservation.station" tabindex="1" class="form-control">
+									<option th:each="station : ${stations}" th:value="${station.id}"
+										th:text="${station.name}"></option>
+								</select>
+							</div>
+							<div class="col-sm-9" sec:authorize="hasAnyRole('ROLE_Admin', 'ROLE_Manager', 'ROLE_Employee')">
+								<span th:text="${reservation.station.name}"></span>
+								<input class="hidden" type="text" name="reservation.station.id" id="reservation.station.id" th:value="${reservation.station.id}" />
+							</div>
+						</div>
+						<!-- termin kada klijentu paše dovesti auto na popravak -->
+						<div class="form-group">
+							<label class="control-label col-sm-3" for="user.username">Termin početka servisa</label>
+							<div class="col-sm-9">
+								<input type="text" name="repairStartDate" id="repairStartDate" th:value="${reservation.repairStartDate}" class="form-control" />
+							</div>
+						</div>
+						
+						<div sec:authorize="hasAnyRole('ROLE_Admin', 'ROLE_Manager', 'ROLE_Employee')">
+							<!-- Status servisa -->
+							<div class="form-group">
+								<label class="control-label col-sm-3">Status servisa</label>
+								<div class="col-sm-9">
+									<select th:field="*{form.reservation.reservationStatus}" id="form.reservation.reservationStatus" tabindex="1" class="form-control">
+										<option th:each="status : ${statuses}" th:value="${status}" th:text="${status}"></option>
+									</select>
+								</div>
+							</div>
+							<!-- Odabir servisera -->
+							<div class="form-group">
+								<label class="control-label col-sm-3">Serviser</label>
+								<div class="col-sm-9">
+									<select th:field="*{form.reservation.repairman}" id="form.reservation.repairman" tabindex="1" class="form-control">
+										<option th:each="rep : ${repairmen}" th:value="${rep.id}" th:text="${rep.username}"></option>
+									</select>
+								</div>
+							</div>
+							<!-- termin kada će od prilike auto biti popravljen -->
+							<div class="form-group">
+								<label class="control-label col-sm-3" for="user.username">Termin završetka servisa</label>
+								<div class="col-sm-9">
+									<input type="text" name="estimatedRepairEndDate" id="estimatedRepairEndDate" th:value="${reservation.estimatedRepairEndDate}" class="form-control" />
+								</div>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<div class="col-sm-offset-2 col-sm-10">
+								<button type="submit" class="btn btn-primary pull-right">Izmijeni</button>
+							</div>
+						</div>
+					</form>
+	
+				</div>
+			</div>
+	
+		</div>
+	
+		<footer class="footer-bottom" th:include="fragments/footer :: footer-private"></footer>
+
+		<script type="text/javascript">
+			//this date time picker is not working properly o_O
+			$('#repairStartDate').datetimepicker({
+				format : 'YYYY-MM-DD HH:mm'
+			});
+			$('#estimatedRepairEndDate').datetimepicker({
+				format : 'YYYY-MM-DD HH:mm'
+			});
+		</script>
+	</body>
+</html>

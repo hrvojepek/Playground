@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" 
+	  xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:security="http://www.springframework.org/schema/security"
+      th:with="currentPage='users-table'">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="Autoservis" />
+    <meta name="author" content=""/>
+    <meta name="ctx" th:content="${#httpServletRequest.getContextPath()}" />
+    <!--  <link rel="icon" href="../../favicon.ico" />-->
+
+    <title>Autoservis</title>
+    
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<!-- Custom styles for this template -->
+	<link rel="stylesheet" th:href="@{/css/style.css}" href="css/style.css" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+  </head>
+
+  <body>
+	<div th:include="fragments/header::navigation"></div>
+    <div class="container">
+    	
+    	<div class="row">
+				<br />
+				<h2 th:if="${myProfile}">Pregled vlastitih podataka</h2> <br/>
+	    		<h2 th:unless="${myProfile}">Pregled korisničkih podataka</h2>
+				<br />
+			</div>
+    
+    	<div class="row">
+    		<div class="form-group col-xs-12">
+    			<label class="col-xs-2">Username</label>
+    			<div class="col-xs-10">
+    				<span th:text="${user.username}"></span>
+    			</div>
+    		</div>
+    		<div class="form-group col-xs-12">
+    			<label class="col-xs-2">First name</label>
+    			<div class="col-xs-10">
+    				<span th:text="${user.firstName}"></span>
+    			</div>
+    		</div>
+    		<div class="form-group col-xs-12">
+    			<label class="col-xs-2">Last name</label>
+    			<div class="col-xs-10">
+    				<span th:text="${user.lastName}"></span>
+    			</div>
+    		</div>
+    		<div class="form-group col-xs-12">
+    			<label class="col-xs-2">Email</label>
+    			<div class="col-xs-10">
+    				<span th:text="${user.email}"></span>
+    			</div>
+    		</div>
+    		<div class="form-group col-xs-12" sec:authorize="hasAnyRole('ROLE_Admin', 'ROLE_Manager', 'ROLE_Employee')">
+    			<label class="col-xs-2">User status</label>
+    			<div class="col-xs-10">
+    				<span th:text="${user.status}"></span>
+    			</div>
+    		</div>
+    		<div class="form-group col-xs-12" th:if="${user.employeeOfStation}" sec:authorize="hasAnyRole('ROLE_Admin', 'ROLE_Manager', 'ROLE_Employee')">
+    			<label class="col-xs-2">Station employ</label>
+    			<div class="col-xs-10">
+    				<span th:text="${user.employeeOfStation.name}"></span>
+    			</div>
+    		</div>
+    		<div class="form-group col-xs-12" sec:authorize="hasAnyRole('ROLE_Admin', 'ROLE_Manager', 'ROLE_Employee')">
+    			<label class="col-xs-2">Rola</label>
+    			<div class="col-xs-10">
+    				<span th:text="${user.role.name}"></span>
+    			</div>
+    		</div>
+    		<div class="form-group col-xs-12" sec:authorize="hasAnyRole('ROLE_Admin', 'ROLE_Manager', 'ROLE_Employee')">
+    			<label class="col-xs-2">Kreiran dana</label>
+    			<div class="col-xs-10">
+    				<span th:text="${user.createdDate}"></span>
+    			</div>
+    		</div>
+<!--     		<div class="form-group col-xs-12" sec:authorize="hasAnyRole('ROLE_Admin', 'ROLE_Manager', 'ROLE_Employee')" th:if="${user.createdBy}"> -->
+<!--     			<label class="col-xs-2">Kreirao</label> -->
+<!--     			<div class="col-xs-10"> -->
+<!--     				<span th:text="${user.createdBy}"></span> -->
+<!--     			</div> -->
+<!--     		</div> -->
+<!--     		<div class="form-group col-xs-12" sec:authorize="hasAnyRole('ROLE_Admin', 'ROLE_Manager', 'ROLE_Employee')" th:if="${user.modifiedDate}"> -->
+<!--     			<label class="col-xs-2">Profil zadnji put ažuriran</label> -->
+<!--     			<div class="col-xs-10"> -->
+<!--     				<span th:text="${user.modifiedDate}"></span> -->
+<!--     			</div> -->
+<!--     		</div> -->
+<!--     		<div class="form-group col-xs-12" sec:authorize="hasAnyRole('ROLE_Admin', 'ROLE_Manager', 'ROLE_Employee')" th:if="${user.modifiedBy}"> -->
+<!--     			<label class="col-xs-2">Profil ažurirao</label> -->
+<!--     			<div class="col-xs-10"> -->
+<!--     				<span th:text="${user.modifiedBy}"></span> -->
+<!--     			</div> -->
+<!--     		</div> -->
+       		
+    		<a class="btn btn-primary col-sm-offset-3" th:href="@{/private/user/edit/}" th:if="${myProfile}">Uredi profil</a>
+    		<a class="btn btn-primary col-sm-offset-3" th:href="@{/private/user/edit/{id}(id=${user.id})}" th:unless="${myProfile}" sec:authorize="hasAnyRole('ROLE_Admin')">Uredi profil</a>
+    		
+    		<br/> <br/> <br/>
+    	</div>
+    </div>
+    
+ 	<footer class="footer-bottom"  th:include="fragments/footer :: footer-private">	</footer>
+ 	
+  </body>
+</html>

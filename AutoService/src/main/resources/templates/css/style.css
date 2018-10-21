@@ -1,0 +1,133 @@
+html {
+  height: 100%;
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+body {
+  position: relative;
+  margin: 0;
+  padding-bottom: 6rem;
+  min-height: 100%;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+}
+
+/* #body {
+	margin: 0 auto;
+	padding-top: 64px;
+	max-width: 640px;
+	width: 94%;
+}
+
+#body h2 {
+	margin-top: 0;
+} */ 
+
+.footer-bottom {
+	position: absolute;
+	 right: 0;
+	 bottom: 0;
+	 left: 0;
+	 padding: 1rem;
+	 background-color: #efefef;
+	 text-align: center;
+}
+
+/******************NAVIGATION******************/
+.main-nav {
+	display: inline-block !important;
+	float: none !important;
+	vertical-align: top !important;
+}
+
+.main-nav li a, .main-nav-right li a {
+	padding: 20px 25px 20px 25px !important;
+}
+
+.navbar .navbar-collapse {
+	text-align: center;
+}
+
+.navbar {
+	margin-bottom: 0px;
+}
+
+/* General sizing */
+ul.dropdown-lr {
+	width: 300px;
+}
+
+/* mobile fix */
+@media ( max-width : 768px) {
+	.dropdown-lr h3 {
+		color: #eee;
+	}
+	.dropdown-lr label {
+		color: #eee;
+	}
+}
+
+/******************HERO-IMAGE******************/
+.jumbotron {
+	background: url(../img/black-and-white-car-vehicle-vintage.jpg)
+		no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	height: 650px;
+}
+
+.main-container {
+	margin-top: 340px;
+}
+
+.main-container h1, .main-container p {
+	color: white;
+}
+
+/******************MAIN-HEADINGS******************/
+.heading-middle img {
+	margin-left: 30%;
+	padding-top: 25px;
+}
+
+.heading-middle h2 {
+	margin-left: 30%;
+	padding-top: 25px;
+}
+
+.heading-middle p, .heading-middle p {
+	padding-top: 25px;
+}
+
+/******************PRODUCTS-INDEX******************/
+.product {
+	padding-left: 0px;
+	margin-left: -10px;
+	padding-bottom: 100px;
+}
+
+.product h3, .product p {
+	margin-top: 0px;
+}
+
+/******************FOOTER******************/
+footer {
+	background-color: #eee;
+}
+
+.footer-bottom {
+/* 	background-color: #eee;
+	*position: absolute;*
+	right: 0;
+	bottom: 0;
+	left: 0;
+	padding: 15px;
+	text-align: center;*/
+} 

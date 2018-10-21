@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:security="http://www.springframework.org/schema/security"
+	th:with="currentPage='users-table'">
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+		<meta name="description" content="Autoservis" />
+		<meta name="author" content="" />
+		<meta name="ctx" th:content="${#httpServletRequest.getContextPath()}" />
+		<!--  <link rel="icon" href="../../favicon.ico" />-->
+		
+		<title>Autoservis</title>
+		
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+		<script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+		<script src="https://cdn.datatables.net/1.10.13/js/dataTables.bootstrap.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script type="text/javascript" th:src="@{/js/index-datatables.js}" src="../js/index-datatables.js"></script>
+		<link rel="stylesheet" th:href="@{/css/style.css}" href="css/style.css" />
+		<link rel="stylesheet" href="https://cdn.datatables.net/1.10.13/css/dataTables.bootstrap.min.css" />
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+	</head>
+	<body>
+		<div th:include="fragments/header::navigation"></div>
+		<div class="container">
+			<table id="table_id"
+				class="table table-striped table-bordered index-datatable"
+				cellspacing="0" width="100%">
+				<thead class="index-datatable-header">
+					<tr>
+						<th>Korisničko ime</th>
+						<th>Ime</th>
+						<th>Prezime</th>
+						<th>Rola</th>
+						<th th:unless="${clients}">Zaposlenik stanice</th>
+						<th th:unless="${clients}">Upravitelj stanice</th>
+						<th>Pregled profila</th>
+						<th sec:authorize="hasRole('ROLE_Admin')">Ažuriranje profila</th>
+						<th th:unless="${clients}" sec:authorize="hasRole('ROLE_Manager')">Ažuriranje profila</th>
+						<th sec:authorize="hasRole('ROLE_Admin')"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="user : ${users}">
+						<td th:text="${user.username}"></td>
+						<td th:text="${user.firstName}"></td>
+						<td th:text="${user.lastName}"></td>
+						<td th:text="${user.role.name}"></td>
+						<td th:unless="${clients}">
+							<span th:if="${user.employeeOfStation}" th:text="${user.employeeOfStation.name}"></span>
+						</td>
+						<td th:unless="${clients}">
+							<span th:if="${user.managerOfStation}" th:text="${user.managerOfStation.name}"></span>
+						</td>
+						<td>
+							<a th:href='@{/private/user/view/{id}(id=${user.id})}'>Pogledaj profil</a>
+						</td>
+						<td sec:authorize="hasRole('ROLE_Admin')">
+							<a th:href='@{/private/user/edit/{id}(id=${user.id})}'>Ažuriraj profil</a>
+						</td>
+						<td th:unless="${clients}" sec:authorize="hasRole('ROLE_Manager')">
+							<a th:if="${user.employeeOfStation != null and user.employeeOfStation.id == authUser.managerOfStation.id}"
+								th:href='@{/private/user/edit/{id}(id=${user.id})}'>Ažuriraj profil</a>
+						</td>
+						<td sec:authorize="hasRole('ROLE_Admin')" align="center">
+							<a th:href='@{/private/user/delete/{id}(id=${user.id})}' class="btn btn-success">Obriši</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<footer class="footer-bottom" th:include="fragments/footer :: footer-private"> </footer>
+	</body>
+</html>
